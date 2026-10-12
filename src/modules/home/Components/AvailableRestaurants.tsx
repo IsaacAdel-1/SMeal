@@ -4,8 +4,8 @@ import type { Resturant } from "../types"
 import ResturantCard from "./Resturant"
 
 
-export default function AvailableRestaurants({ search }: { search: string }) {
-   const {data , error , isError , isPending} = useResturants(search)
+export default function AvailableRestaurants({ search , selectedCat}: { search: string ; selectedCat :string }) {
+   const {data , error , isError , isPending} = useResturants({search : search, restaurantCategoryId : selectedCat})
     
     if(isPending) return <p>Loading Resturants...</p>
     if(isError) return <p>{error.message}</p>

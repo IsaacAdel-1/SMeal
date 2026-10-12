@@ -1,12 +1,11 @@
 
-import { useState } from "react";
 import SearchIcon from "../../../assets/svgs/Search";
 import useCategories from "../hooks/useCategories";
 
 
-    export default function ExploreCuisines({Search , SetSearch} : {Search : string ; SetSearch : (value : string)=> void}) {
+    export default function ExploreCuisines(
+        {Search , SetSearch , selectedCat ,setSelectedCat} : {Search : string ; SetSearch : (value : string)=> void , selectedCat : string; setSelectedCat : (value : string) => void}) {
         const {data , isPending, isError, error} = useCategories()
-        const [selectedCategory , setSelectedCategory] = useState<string | null>("All items")
     return (
         <>
             <h2 className="text-white mt-8 font-semibold mb-4 text-xl">Explore Cuisines</h2>
@@ -27,12 +26,12 @@ import useCategories from "../hooks/useCategories";
                 <ul className="flex gap-2 flex-wrap mt-6">
                     
                     <li className={` text-white truncate border border-[#2d2e32] rounded-2xl 
-                        px-4 py-2  cursor-pointer ${selectedCategory === "All items" ? "bg-[#f6463b]" :"bg-[#0c0d12] hover:bg-[#1b1c21]"}`} 
-                        onClick={()=>{setSelectedCategory("All items")}}>All items</li>
+                        px-4 py-2  cursor-pointer ${selectedCat === "" ? "bg-[#f6463b]" :"bg-[#0c0d12] hover:bg-[#1b1c21]"}`} 
+                        onClick={()=>{setSelectedCat("")}}>All items</li>
                 {data.data.map((c : any)=>{
                     return <li className={` text-white truncate border border-[#2d2e32] rounded-2xl 
-                        px-4 py-2  cursor-pointer ${selectedCategory === c.id ? "bg-[#f6463b]" :"bg-[#0c0d12] hover:bg-[#1b1c21]"}`} 
-                    key={c.id} onClick={()=>{setSelectedCategory(c.id)}}>{c.name}</li>
+                        px-4 py-2  cursor-pointer ${selectedCat === c.id ? "bg-[#f6463b]" :"bg-[#0c0d12] hover:bg-[#1b1c21]"}`} 
+                    key={c.id} onClick={()=>{setSelectedCat(c.id)}}>{c.name}</li>
                 })}
             </ul>
             }

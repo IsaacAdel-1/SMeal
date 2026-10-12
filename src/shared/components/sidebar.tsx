@@ -24,7 +24,7 @@ export default function sidebar() {
     setActiveItem(id);
   }
   return (
-    <div className='bg-[#0c0d12] w-75 min-h-screen p-4 flex flex-col justify-between sticky  top-0'>
+    <div className='bg-[#0c0d12] w-75 min-h-screen p-4 flex flex-col justify-between sticky  top-0 bottom-0'>
       <div>
         <header className='flex gap-2 '>
             <img src={Logo} className='w-12 h-12'/>

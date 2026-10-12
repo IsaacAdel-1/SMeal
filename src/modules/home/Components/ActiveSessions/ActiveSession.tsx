@@ -27,8 +27,8 @@ export default function ActiveSession() {
   const HostName = "Ahmed Hassan";
   
   return (
-    <div className="bg-linear-to-r from-[#2b1014] via-[#1a0d11] to-[#0d0d12] border border-[#ff3b30]/25 rounded-2xl p-6">
-        <header className='flex justify-between items-center'>
+    <div className="bg-linear-to-r from-[#2b1014] via-[#1a0d11] to-[#0d0d12] border border-[#ff3b30]/25 rounded-2xl p-6 ">
+        <header className='flex justify-between items-center '>
           <p className="bg-[#2a271d] border border-[#2c4f2c] text-[#31c759] font-semibold leading-none py-1 px-2 rounded-2xl flex items-center gap-1.5 "><Lamb/> Session Active</p>
           <p className="bg-[#3a191e] flex items-center text-[#ff3b30] gap-1 border border-[#611f22] py-.75 px-2 rounded-2xl"><MdOutlineAccessTime className="size-4" /> <span>{pad(hours)}:{pad(minuts)}:{pad(seconds)}</span></p>
         </header>
