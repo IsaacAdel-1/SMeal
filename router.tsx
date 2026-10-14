@@ -7,6 +7,9 @@ import LoginForm from './src/modules/auth/Components/Forms/LoginForm'
 import ForgetPassword from "./src/modules/auth/Components/Forms/ForgetPassword";
 import ProtectedRoute from "./src/shared/components/ProtectedRoute";
 import Dashboard from "./src/layouts/Dashboard";
+import Orders from "./src/modules/orders/pages/Orders";
+import HomePage from "./src/modules/home/pages/HomePage";
+import History from "./src/modules/history/pages/History";
 export default function AppRouter() {
     return(
         <Routes>
@@ -19,7 +22,11 @@ export default function AppRouter() {
             </Route>
             
             <Route element={<ProtectedRoute/>}>
-                    <Route path="home" element={<Dashboard />} />
+                    <Route element={<Dashboard />}>
+                        <Route path="home" element={<HomePage/>} />
+                        <Route path="orders" element={<Orders />} />
+                        <Route path="history" element={<History />} />
+                    </Route>
             </Route>
         </Routes>
     )

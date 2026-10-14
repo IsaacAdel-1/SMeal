@@ -33,7 +33,7 @@ export default function sidebar() {
                 <p className='text-[#757282] text-[12px]'>Desktop Workspace</p>
             </div>
         </header>
-        <div className='w-full bg-[#1a1b20] h-px my-5'/>
+        <div className='w-full bg-[#1a1b20] h-px my-7'/>
 
         <ul className='flex flex-col gap-2'>
             {sidebarItems.map((item)=>{
