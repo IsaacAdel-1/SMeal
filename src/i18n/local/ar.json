@@ -202,5 +202,20 @@
   "itemCard": {
     "decreaseQuantity": "تقليل الكمية",
     "increaseQuantity": "زيادة الكمية"
+  },
+  "setNewPassword": {
+  "title": "تعيين كلمة مرور جديدة",
+  "subtitle": "اختر كلمة مرور قوية لم تستخدمها من قبل.",
+  "password": "كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "save": "حفظ كلمة المرور",
+  "saving": "جارٍ الحفظ...",
+  "backTo": "تذكرت كلمة المرور؟",
+  "signIn": "تسجيل الدخول",
+  "errors": {
+    "passwordMin": "كلمة المرور يجب ألا تقل عن 8 أحرف",
+    "confirmRequired": "من فضلك أكّد كلمة المرور",
+    "mismatch": "كلمتا المرور غير متطابقتين"
   }
+}
 }

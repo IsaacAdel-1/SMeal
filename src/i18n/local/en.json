@@ -192,5 +192,21 @@
   "itemCard": {
     "decreaseQuantity": "Decrease quantity",
     "increaseQuantity": "Increase quantity"
+  },
+
+  "setNewPassword": {
+  "title": "Set new password",
+  "subtitle": "Choose a strong password you haven't used before.",
+  "password": "New password",
+  "confirmPassword": "Confirm password",
+  "save": "Save password",
+  "saving": "Saving...",
+  "backTo": "Remembered your password?",
+  "signIn": "Sign in",
+  "errors": {
+    "passwordMin": "Password must be at least 8 characters",
+    "confirmRequired": "Please confirm your password",
+    "mismatch": "Passwords do not match"
   }
+}
 }
