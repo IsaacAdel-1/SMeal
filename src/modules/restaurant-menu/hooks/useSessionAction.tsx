@@ -12,6 +12,5 @@ export default function useSessionAction() {
       queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
       if (variables.action === "order") navigate("/orders");
     },
-    onError: (e) => alert(e.message),
   });
 }
