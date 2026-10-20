@@ -61,7 +61,7 @@ export default function SignupForm() {
                     </div>
                     
         
-                    <button className="text-brand text-sm font-bold cursor-pointer" type="button">Forget Password?</button>
+                    <Link className="text-brand text-sm font-bold cursor-pointer" type="button" to={'/forget-password'}>Forget Password?</Link>
                 </div>
                 {errors.termsAndConditions && (
                             <p className="text-red-500 text-sm">

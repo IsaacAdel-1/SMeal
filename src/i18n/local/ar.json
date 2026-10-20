@@ -78,7 +78,8 @@
     "sessions_other": "{{count}} جلسة"
   },
   "orders": {
-    "header": "طلباتي"
+    "header": "طلباتي",
+    "noActiveSession":"لا يوجد جلسات نشطة"
   },
   "homeNavbar": {
     "sessionHost": "مضيف الجلسة",
@@ -183,6 +184,7 @@
     "itemsSelected_other": "تم اختيار {{count}} عنصر",
     "totalPrice": "{{total}} جنيه"
   },
+
   "session": {
     "actions": {
       "create": "إنشاء جلسة",

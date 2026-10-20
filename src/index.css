@@ -18,6 +18,7 @@
   --brand-strong: #a41e23;
   --success: #248a3d;
   --info: #5267a5;
+  --input : #fff
 }
 .dark {
   --background: #08090e;
@@ -33,6 +34,7 @@
   --brand-strong: #a41e23;
   --success: #34c759;
   --info: #aeaed2;
+  --input : #f7eeee ;
 }
 @theme inline {
   --color-background: var(--background);
@@ -48,6 +50,7 @@
   --color-brand-strong: var(--brand-strong);
   --color-success: var(--success);
   --color-info: var(--info);
+  --color-input: var(--input);
 }
 
 

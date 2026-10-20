@@ -14,7 +14,10 @@
     "settings": "Profile Settings"
   }
 },
-
+"orders" : {
+  "header" :"My Orders",
+  "noActiveSession" :"No Active Sessions"
+},
 "login": {
   "title": "Welcome Back",
   "subtitle": "Sign in to manage your meal plans",

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import Lamb from "./Lamb";
 import LockIcon from "../../../../assets/svgs/LockIcon";
 import type { ActiveSessionType } from "../../types";
+import useSessionAction from "@/modules/restaurant-menu/hooks/useSessionAction";
 
 const parseUtc = (date: string) => {
   const hasZone = /Z|[+-]\d{2}:?\d{2}$/.test(date);
@@ -21,6 +22,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 export default function ActiveSession({ session }: { session: ActiveSessionType }) {
   const { t } = useTranslation();
   const {
+    sessionId,
     restaurantName,
     ownerName,
     participantCount,
@@ -41,7 +43,8 @@ export default function ActiveSession({ session }: { session: ActiveSessionType 
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
-
+  const {mutate : ConfirmOrder , isPending : ConfirmPending}= useSessionAction()
+  const {mutate : Order , isPending : OrderPending }= useSessionAction()
   return (
     <div className="rounded-2xl border border-border bg-card p-6">
       <header className="flex items-center justify-between">
@@ -67,12 +70,29 @@ export default function ActiveSession({ session }: { session: ActiveSessionType 
         </p>
       </div>
 
-      {currentUserIsOwner && (
+      {currentUserIsOwner  && session.status === 0 && (
         <div>
           <div className="my-4 h-px w-full bg-border" />
-          <button className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong font-bold text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]">
+          <button className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong font-bold text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]"
+            onClick={()=>{ConfirmOrder({sessionId , action : "close"})}}
+            disabled={ConfirmPending}
+          >
             <LockIcon className="size-4" />
             {t("activeSession.confirmOrder")}
+          </button>
+        </div>
+      )}
+
+      {currentUserIsOwner  && session.status === 1 && (
+        <div>
+          <div className="my-4 h-px w-full bg-border" />
+          <button className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong font-bold text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]"
+            onClick={()=>{Order({sessionId , action : "order"})}}
+            disabled={OrderPending}
+          >
+            <LockIcon className="size-4" />
+            {/* {t("activeSession.confirmOrder")} */}
+            Order
           </button>
         </div>
       )}

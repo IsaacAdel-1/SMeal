@@ -1,6 +1,5 @@
 
-import { useAuth } from "../../auth/context/AuthContext";
-
+import Cookies from "js-cookie";
 const getInitials = (name: string): string =>
   name
     .trim()
@@ -10,8 +9,8 @@ const getInitials = (name: string): string =>
     .join("");
 
 export function Details() {
-  const { user } = useAuth();
-
+  const raw = Cookies.get("user");
+  const user = raw ? JSON.parse(raw) : null;
   if (!user) return null;
 
   const initial = getInitials(`${user.firstName} ${user.lastName}`);

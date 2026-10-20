@@ -25,6 +25,7 @@ export function AuthProvider({children} : AuthProviderProps){
     const [user , setUser] = useState <User | null >(null)
     const login = (userData : User) =>{
         setUser(userData) 
+        Cookies.set("user" , JSON.stringify(userData))
     }
 
     const logout = ()=>{

@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../auth/context/AuthContext";
-
+import Cookies from "js-cookie";
 export type User = {
   id: number;
   fullName: string;
@@ -17,14 +16,14 @@ export const mockUser: User = {
 
 export default function HomeNavbar() {
   const { t } = useTranslation();
-  const { user } = useAuth();
-
+  const raw = Cookies.get("user");
+  const user = raw ? JSON.parse(raw) : null;
   const initialLetters = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase();
 
   return (
     <div className="bg-surface px-7 py-4.5 text-foreground">
       <div className="flex gap-2">
-        <p className="bg-brand h-12 w-12 flex justify-center items-center text-2xl font-semibold rounded-2xl">
+        <p className="bg-brand h-12 w-12 flex justify-center items-center text-2xl font-semibold rounded-2xl text-white">
           {initialLetters}
         </p>
 

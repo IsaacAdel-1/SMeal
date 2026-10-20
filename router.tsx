@@ -12,6 +12,7 @@ import HomePage from "./src/modules/home/pages/HomePage";
 import History from "./src/modules/history/pages/History";
 import Profile from "@/modules/Profile/pages/Profile";
 import RestaurantMenuPage from "@/modules/restaurant-menu/pages/RestaurantMenuPage";
+import SetNewPasswordForm from "@/modules/auth/Components/Forms/SetNewPassword";
 export default function AppRouter() {
     return(
         <Routes>
@@ -21,6 +22,7 @@ export default function AppRouter() {
                 <Route path="signup" element={<SignupForm />} />
                 <Route path="verify-otp" element={<OTPForm />} />
                 <Route path="forget-password" element={<ForgetPassword />} />
+                <Route path="change-password" element={<SetNewPasswordForm />} />
             </Route>
             
             <Route element={<ProtectedRoute/>}>

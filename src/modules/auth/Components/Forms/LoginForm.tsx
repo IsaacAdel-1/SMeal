@@ -47,7 +47,7 @@ export default function LoginForm() {
           <p className="text-sm text-destructive">{errors.email.message}</p>
         )}
 
-        <CustomInput label={t("login.password")} icon={Lock} {...register("password")} />
+        <CustomInput label={t("login.password")} icon={Lock} {...register("password")} type="password"/>
         {errors.password?.message && (
           <p className="text-sm text-destructive">{errors.password.message}</p>
         )}

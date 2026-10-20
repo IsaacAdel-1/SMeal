@@ -41,7 +41,7 @@ export default function MenuFooter({
   disabled = false,
   busy = false,
 }: MenuFooterProps) {
-  const { t } = useTranslation("menu");
+  const { t } = useTranslation();
 
   const getAction = () => {
     if (!session) {

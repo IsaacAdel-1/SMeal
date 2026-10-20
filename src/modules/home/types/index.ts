@@ -21,7 +21,12 @@ export interface ActiveSessionType {
   currentUserIsOwner: boolean;
   currentUserOrderId: string | null;
 }
-
+export interface ApiResponse {
+  isSuccess: boolean;
+  message: string | null;
+  data: ActiveSessionType[];
+  errors: string[] | null;
+}
 export interface ActiveSessionsResponse {
   isSuccess: boolean;
   message: string;

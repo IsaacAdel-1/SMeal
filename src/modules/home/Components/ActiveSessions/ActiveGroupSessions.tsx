@@ -6,13 +6,12 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import useActiveSessions from "../../hooks/useActiveSession";
-import type { ActiveSessionType } from "../../types";
+import type { ActiveSessionType, ApiResponse } from "../../types";
 import ActiveSession from "./ActiveSession";
 
-export default function ActiveGroupSessions() {
+export default function ActiveGroupSessions({sessions}:{sessions :ApiResponse}) {
   const { t, i18n } = useTranslation();
-  const { data: sessions } = useActiveSessions();
+  // const { data: sessions } = useActiveSessions();
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
 
@@ -29,7 +28,8 @@ export default function ActiveGroupSessions() {
 
   return (
     <div>
-      <h2>{t("activeGroupSessions.title")}</h2>
+      
+      <h2 className="font-bold ">{t("activeGroupSessions.title")}</h2>
 
       <Carousel setApi={setCarouselApi} opts={{ direction: i18n.dir() }}>
         <CarouselContent>

@@ -5,7 +5,7 @@ import { sidebarItems } from "../../constants/sidebarItems";
 import { useState } from "react";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/modules/auth/context/AuthContext";
-
+import Cookies from "js-cookie";
 export type User = {
   id: number;
   fullName: string;
@@ -20,7 +20,9 @@ export const mockUser: User = {
 
 export default function Sidebar() {
   const { t } = useTranslation();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
+  const raw = Cookies.get("user");
+  const user = raw ? JSON.parse(raw) : null;
   const navigate = useNavigate();
 
   const initialLetters = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase();
@@ -62,7 +64,7 @@ export default function Sidebar() {
       </div>
 
       <div className="flex text-foreground gap-2 items-center">
-        <p className="bg-brand w-12 h-12 flex items-center justify-center text-2xl font-semibold rounded-2xl">
+        <p className="bg-brand w-12 h-12 flex items-center justify-center text-2xl font-semibold rounded-2xl text-white">
           {initialLetters}
         </p>
 

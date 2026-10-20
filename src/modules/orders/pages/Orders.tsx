@@ -5,7 +5,8 @@ import OrderedItems from "../Components/OrderedItems";
 import OrderTrackingCard from "../Components/OrderTrackingCard";
 import type { ActiveSessionType } from "@/modules/home/types";
 import useOrderDetails from "../hooks/useOrderDetails";
-import { t } from "i18next";
+// import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const findMySession = (sessions: ActiveSessionType[]) => {
   return sessions?.find((s) => s.currentUserIsOwner || s.currentUserOrderId !== null);
@@ -29,8 +30,9 @@ export default function Orders() {
   const resturantName = orderDetailsData?.data.items[0].restaurantName
 
   
+    const { t } = useTranslation();
   
-  if (!mySession) return <p>{t("orders.noActiveSession")}</p>;
+  if (!mySession) return <p className="text-2xl font-semibold m-auto">{t("orders.noActiveSession")}</p>;
 
   return (
     <div>
