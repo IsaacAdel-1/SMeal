@@ -5,3 +5,11 @@ export type OrderItem = {
   quantity: number;
   unitPrice: number;
 };
+
+export interface OrderItemsType {
+  
+  menuItemId: string,
+  menuItemName: string,
+  quantity: number,
+  unitPrice: number
+}

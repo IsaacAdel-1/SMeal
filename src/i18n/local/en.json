@@ -1,0 +1,193 @@
+{
+  "sidebar": {
+  "workspace": "Desktop Workspace",
+  "logout": "Log out",
+  "roles": {
+    "customer": "Customer",
+    "admin": "Admin",
+    "chef": "Chef"
+  },
+  "items": {
+    "home": "Home Feed",
+    "orders": "My Orders",
+    "history": "History",
+    "settings": "Profile Settings"
+  }
+},
+
+"login": {
+  "title": "Welcome Back",
+  "subtitle": "Sign in to manage your meal plans",
+  "email": "Email Address",
+  "password": "Password",
+  "rememberMe": "Remember Me",
+  "forgotPassword": "Forgot Password?",
+  "signIn": "Sign In",
+  "signingIn": "Signing in...",
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "errors": {
+    "emailInvalid": "Please enter a valid email address",
+    "passwordMin": "Password must be at least 8 characters"
+  }
+},
+"otp": {
+  "title": "Security Code",
+  "subtitle": "Enter code dispatched to",
+  "digit": "Digit {{number}}",
+  "verify": "Verify Account",
+  "sending": "Sending...",
+  "noCode": "Didn't get the code?",
+  "resend": "Resend",
+  "errors": {
+    "generic": "Something went wrong"
+  }
+},
+"forgetPassword": {
+  "title": "Reset Password",
+  "subtitle": "Enter your email to receive recovery instructions",
+  "email": "Registered Email",
+  "submit": "Send Recovery Link",
+  "sending": "Sending...",
+  "errors": {
+    "emailInvalid": "Please enter a valid email address"
+  }
+},
+"authBranding": {
+  "title": "Gourmet Meals, Delivered Daily.",
+  "description": "Experience the ultimate culinary subscription platform designed to fuel your schedule with fresh, chef-prepared options effortlessly.",
+  "features": {
+    "fresh": "Fresh ingredients sourced daily from local farms",
+    "flexible": "Flexible scheduling tailored to your busy routine",
+    "nutrition": "Nutritionist-approved macro plans & recipes"
+  },
+  "copyright": "© 2026 sMeals · Powered by SB Tech"
+},
+
+"history": {
+  "header": "Order Archive & History Workspace",
+  "host": "Host",
+  "you": "You",
+  "inclDelivery": "Incl. {{amount}} Delivery",
+  "viewReceipt": "View Verified Receipt Scan",
+  "totalPastSpent": "Total Past Spent",
+  "completedOrders": "Completed Orders",
+  "sessions_one": "{{count}} Session",
+  "sessions_other": "{{count}} Sessions"
+},
+"homeNavbar": {
+  "sessionHost": "Session host",
+  "roles": {
+    "customer": "Customer",
+    "admin": "Admin",
+    "Organizer": "Organizer"
+  }
+},
+"availableRestaurants": {
+  "title": "Available Restaurants",
+  "loading": "Loading restaurants...",
+  "empty": "No restaurants available"
+},
+"restaurantCard": {
+  "viewDetails": "View Details & Menu",
+  "distance": "{{distance}} km"
+},
+"exploreCuisines": {
+  "title": "Explore Cuisines",
+  "searchPlaceholder": "Search restaurants, cuisines",
+  "loading": "Loading...",
+  "all": "All items"
+},
+"activeGroupSessions": {
+  "title": "Active Group Sessions",
+  "goToSession": "Go to session {{number}}"
+},
+"activeSession": {
+  "active": "Session Active",
+  "host": "Host",
+  "you": "You",
+  "joining_one": "{{count}} Joining",
+  "joining_other": "{{count}} Joining",
+  "confirmOrder": "Confirm Order"
+},
+"billBreakdown": {
+    "title": "Bill Breakdown",
+    "itemsSubtotal": "Your Items Subtotal",
+    "deliveryShare": "Delivery Share ({{people}} people)",
+    "totalAmount": "Total Amount"
+  },
+  "orderedItems": {
+    "title": "Your Ordered Items",
+    "status": "Locked & Submitted",
+    "quantityAndUnitPrice": "Qty: {{quantity}} - {{unitPrice}} EGP each",
+    "price": "{{price}} EGP"
+  },
+  "orderTracking": {
+    "title": "Live Order Tracking",
+    "placedStatus": "Placed with Restaurant",
+    "submitted": "Submitted",
+    "restaurant": "Restaurant",
+    "arrived": "Arrived"
+  },
+  
+  "accountSettings": {
+    "title": "Account Settings",
+    "items": {
+      "editPersonalDetails": "Edit Personal Details",
+      "changePassword": "Change Password",
+      "securityPrivacy": "Security & Privacy"
+    }
+  },
+  "changePassword": {
+    "description": "Enter your current password and choose a new one",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "saveChanges": "Save changes",
+    "currency": "EGP",
+    "loading": "Loading...",
+    "restaurantNotFound": "Restaurant not found"
+
+  },
+  "editPersonalDetails": {
+    "profilePicture": "Profile picture",
+    "changeProfilePicture": "Change profile picture",
+    "firstName": "First Name",
+    "lastName": "Last Name"
+  },
+  "logout": {
+    "button": "Log Out"
+  },
+  "preferences": {
+    "title": "Preferences & Appearance",
+    "darkMode": "Dark Mode",
+    "appLanguage": "App Language",
+    "languageValue": "English (US)"
+  },
+  "footer": {
+    "itemsSelected_one": "{{count}} item selected",
+    "itemsSelected_other": "{{count}} items selected",
+    "totalPrice": "{{total}} EGP"
+  },
+  "session": {
+    "actions": {
+      "create": "Create Session",
+      "join": "Join Active Session",
+      "close": "Close Session",
+      "placeOrder": "Place Order",
+      "markArrived": "Mark Arrived",
+      "end": "End Session",
+      "reopen": "Reopen Session",
+      "cancel": "Cancel Session",
+      "menuHeader": "{{name}} Menu Flow",
+    "confirmAction": "Are you sure?"
+    }
+  },
+  "itemCard": {
+    "decreaseQuantity": "Decrease quantity",
+    "increaseQuantity": "Increase quantity"
+  }
+}

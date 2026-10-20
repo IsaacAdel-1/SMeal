@@ -1,53 +1,81 @@
 import { MdOutlineAccessTime } from "react-icons/md";
 import { FaUserShield } from "react-icons/fa";
-
-
-import Lamb from './Lamb'
 import { useEffect, useState } from "react";
-import { mockUser } from "../HomeNavbar";
+import { useTranslation } from "react-i18next";
+
+import Lamb from "./Lamb";
 import LockIcon from "../../../../assets/svgs/LockIcon";
+import type { ActiveSessionType } from "../../types";
 
-export default function ActiveSession() {
-  const [totalSeconds , setTotalSeconds] = useState(3600);
-  useEffect(()=>{
+const parseUtc = (date: string) => {
+  const hasZone = /Z|[+-]\d{2}:?\d{2}$/.test(date);
+  const trimmed = date.replace(/(\.\d{3})\d+/, "$1");
+  return new Date(hasZone ? trimmed : `${trimmed}Z`);
+};
 
-    const id = setInterval(()=>{
-      setTotalSeconds(prev => prev > 0 ? prev -1 : 0)
-      
-    } , 1000)
+const getRemaining = (end: string) =>
+  Math.max(0, Math.floor((parseUtc(end).getTime() - Date.now()) / 1000));
 
-    return ()=> clearInterval(id)
-  },[])
+const pad = (n: number) => String(n).padStart(2, "0");
 
-  const hours = Math.floor(totalSeconds / 3600) ;
-  const minuts = Math.floor((totalSeconds % 3600) / 60 )
-  const seconds = Math.floor(totalSeconds % 60)
-  const pad = (n : number)=> String(n).padStart(2 , "0");
-  const resturant = "El Shabrawy";
-  const HostName = "Ahmed Hassan";
-  
+export default function ActiveSession({ session }: { session: ActiveSessionType }) {
+  const { t } = useTranslation();
+  const {
+    restaurantName,
+    ownerName,
+    participantCount,
+    expectedClosedAt,
+    currentUserIsOwner,
+  } = session;
+
+  const [totalSeconds, setTotalSeconds] = useState(() => getRemaining(expectedClosedAt));
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTotalSeconds(getRemaining(expectedClosedAt));
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, [expectedClosedAt]);
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
   return (
-    <div className="bg-linear-to-r from-[#2b1014] via-[#1a0d11] to-[#0d0d12] border border-[#ff3b30]/25 rounded-2xl p-6 ">
-        <header className='flex justify-between items-center '>
-          <p className="bg-[#2a271d] border border-[#2c4f2c] text-[#31c759] font-semibold leading-none py-1 px-2 rounded-2xl flex items-center gap-1.5 "><Lamb/> Session Active</p>
-          <p className="bg-[#3a191e] flex items-center text-[#ff3b30] gap-1 border border-[#611f22] py-.75 px-2 rounded-2xl"><MdOutlineAccessTime className="size-4" /> <span>{pad(hours)}:{pad(minuts)}:{pad(seconds)}</span></p>
-        </header>
+    <div className="rounded-2xl border border-border bg-card p-6">
+      <header className="flex items-center justify-between">
+        <p className="flex items-center gap-1.5 rounded-2xl border border-success/30 bg-success/10 px-2 py-1 font-semibold leading-none text-success">
+          <Lamb /> {t("activeSession.active")}
+        </p>
 
+        <p className="flex items-center gap-1 rounded-2xl border border-brand/30 bg-brand/10 px-2 py-0.75 text-brand">
+          <MdOutlineAccessTime className="size-4" />
+          <span dir="ltr">
+            {pad(hours)}:{pad(minutes)}:{pad(seconds)}
+          </span>
+        </p>
+      </header>
+
+      <div>
+        <p className="text-xl font-bold text-card-foreground">{restaurantName}</p>
+        <p className="flex items-center gap-1 text-info">
+          <FaUserShield className="size-4 text-brand" />
+          {t("activeSession.host")}: <bdi>{ownerName}</bdi>
+          {currentUserIsOwner && ` (${t("activeSession.you")})`} •{" "}
+          {t("activeSession.joining", { count: participantCount })}
+        </p>
+      </div>
+
+      {currentUserIsOwner && (
         <div>
-
-          <p className="text-white font-bold text-xl">{resturant}</p>
-          <p className="flex items-center gap-1 text-[#aeaed2]"><FaUserShield className="size-4 text-[#ff3b30]" />Host : {HostName}</p>
-        </div>
-
-        
-
-        {mockUser.isHost && <div>
-           <div className="h-px w-full bg-[#332429] my-4"></div>
-            <button className="w-full h-12 flex items-center justify-center gap-2 rounded-xl font-bold text-white bg-linear-to-r from-[#ff5148] to-[#e0291f] shadow-[0_8px_24px_rgba(255,59,48,0.35)]">
-              <LockIcon className="size-4" />
-              Confirm Order
+          <div className="my-4 h-px w-full bg-border" />
+          <button className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong font-bold text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]">
+            <LockIcon className="size-4" />
+            {t("activeSession.confirmOrder")}
           </button>
-           </div>}
-    </div> 
-  )
+        </div>
+      )}
+    </div>
+  );
 }

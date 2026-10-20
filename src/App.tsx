@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from '../router'
 import { AuthProvider } from './modules/auth/context/AuthContext';
-// import Dashboard from './layouts/Dashboard';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
 
@@ -15,13 +15,15 @@ function App() {
     <>
       <BrowserRouter>
       <AuthProvider>
+      <ThemeProvider>
 
       <QueryClientProvider client={queryClient}>
 
         <AppRouter/>
         {/* <Dashboard/> */}
-
+        {/* <ProfileCard/> */}
       </QueryClientProvider>
+      </ThemeProvider>
       </AuthProvider>
       </BrowserRouter>
       

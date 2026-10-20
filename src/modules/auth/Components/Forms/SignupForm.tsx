@@ -37,7 +37,7 @@ export default function SignupForm() {
   return (
     <div className="mt-20">
             <h2 className="font-bold text-[28px]">Create Account</h2>
-            <p className="text-[#555555]">Join sMeals to order fresh gourmet dishes</p>
+            <p className="text-muted-foreground">Join sMeals to order fresh gourmet dishes</p>
             
             <div className="flex flex-col gap-3 mt-10">
 
@@ -55,24 +55,24 @@ export default function SignupForm() {
                 <p className="text-red-500 text-sm">{errors.password?.message}</p>
                 <div className="flex justify-between">
                     <div className="flex gap-2 items-center">
-                        <input type="checkbox" className="accent-[#dd1613] size-4" id="termsAndConditions" {...register("termsAndConditions")}/>
+                        <input type="checkbox" className="accent-brand size-4" id="termsAndConditions" {...register("termsAndConditions")}/>
                         <label htmlFor="termsAndConditions" className="">I accept Terms & Conditions</label>
                         
                     </div>
                     
         
-                    <button className="text-[#ee3d3a] text-sm font-bold cursor-pointer" type="button">Forget Password?</button>
+                    <button className="text-brand text-sm font-bold cursor-pointer" type="button">Forget Password?</button>
                 </div>
                 {errors.termsAndConditions && (
                             <p className="text-red-500 text-sm">
                             {errors.termsAndConditions.message}
                             </p>
                         )}
-                <button className="bg-linear-to-br from-[#ee3d3a] to-[#a41e23] w-full text-white h-11.5 font-semibold rounded-xl" 
+                <button className="bg-linear-to-br from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl" 
                 type="submit" disabled={isPending}>{isPending? "Sending data...": "Sign Up"}</button>
             </form>
             {isError && <p>Error while registing</p>}
-            <p className="">Don't have an account? <Link className="text-[#ee3d3a] font-semibold cursor-pointer" to={'/login'}>Sign in</Link> </p>
+            <p className="">Don't have an account? <Link className="text-brand font-semibold cursor-pointer" to={'/login'}>Sign in</Link> </p>
             </div>
             
             

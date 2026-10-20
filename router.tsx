@@ -10,6 +10,8 @@ import Dashboard from "./src/layouts/Dashboard";
 import Orders from "./src/modules/orders/pages/Orders";
 import HomePage from "./src/modules/home/pages/HomePage";
 import History from "./src/modules/history/pages/History";
+import Profile from "@/modules/Profile/pages/Profile";
+import RestaurantMenuPage from "@/modules/restaurant-menu/pages/RestaurantMenuPage";
 export default function AppRouter() {
     return(
         <Routes>
@@ -24,8 +26,10 @@ export default function AppRouter() {
             <Route element={<ProtectedRoute/>}>
                     <Route element={<Dashboard />}>
                         <Route path="home" element={<HomePage/>} />
+                        <Route path="restaurants/:restaurantId" element={<RestaurantMenuPage />} />
                         <Route path="orders" element={<Orders />} />
                         <Route path="history" element={<History />} />
+                        <Route path="settings" element={<Profile />} />
                     </Route>
             </Route>
         </Routes>

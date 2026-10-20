@@ -1,0 +1,204 @@
+{
+  "sidebar": {
+    "workspace": "مساحة العمل",
+    "logout": "تسجيل الخروج",
+    "roles": {
+      "customer": "عميل",
+      "admin": "مدير",
+      "chef": "شيف"
+    },
+    "items": {
+      "home": "الصفحة الرئيسية",
+      "orders": "طلباتي",
+      "history": "السجل",
+      "settings": "إعدادات الحساب"
+    }
+  },
+  "login": {
+    "title": "مرحبًا بعودتك",
+    "subtitle": "سجّل الدخول لإدارة خطط وجباتك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "rememberMe": "تذكرني",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "signIn": "تسجيل الدخول",
+    "signingIn": "جارٍ تسجيل الدخول...",
+    "noAccount": "ليس لديك حساب؟",
+    "signUp": "إنشاء حساب",
+    "errors": {
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+      "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف"
+    }
+  },
+  "otp": {
+    "title": "رمز الأمان",
+    "subtitle": "أدخل الرمز المرسل إلى",
+    "digit": "الرقم {{number}}",
+    "verify": "تأكيد الحساب",
+    "sending": "جارٍ الإرسال...",
+    "noCode": "لم يصلك الرمز؟",
+    "resend": "إعادة الإرسال",
+    "errors": {
+      "generic": "حدث خطأ ما"
+    }
+  },
+  "forgetPassword": {
+    "title": "إعادة تعيين كلمة المرور",
+    "subtitle": "أدخل بريدك الإلكتروني لتصلك تعليمات الاسترجاع",
+    "email": "البريد الإلكتروني المسجّل",
+    "submit": "إرسال رابط الاسترجاع",
+    "sending": "جارٍ الإرسال...",
+    "errors": {
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح"
+    }
+  },
+  "authBranding": {
+    "title": "وجبات فاخرة، تصلك يوميًا.",
+    "description": "اكتشف منصة الاشتراك الأمثل في الطعام الفاخر، المصممة لتدعم جدولك اليومي بخيارات طازجة يعدّها الطهاة دون أي عناء.",
+    "features": {
+      "fresh": "مكونات طازجة تُجلب يوميًا من المزارع المحلية",
+      "flexible": "جدولة مرنة تناسب روتينك المزدحم",
+      "nutrition": "خطط غذائية ووصفات معتمدة من أخصائيي التغذية"
+    },
+    "copyright": "© 2026 sMeals · بدعم من SB Tech"
+  },
+  "history": {
+    "header": "مساحة أرشيف الطلبات والسجل",
+    "host": "المضيف",
+    "you": "أنت",
+    "inclDelivery": "شامل {{amount}} رسوم توصيل",
+    "viewReceipt": "عرض صورة الإيصال الموثّق",
+    "totalPastSpent": "إجمالي المصروفات السابقة",
+    "completedOrders": "الطلبات المكتملة",
+    "sessions_zero": "لا توجد جلسات",
+    "sessions_one": "جلسة واحدة",
+    "sessions_two": "جلستان",
+    "sessions_few": "{{count}} جلسات",
+    "sessions_many": "{{count}} جلسة",
+    "sessions_other": "{{count}} جلسة"
+  },
+  "orders": {
+    "header": "طلباتي"
+  },
+  "homeNavbar": {
+    "sessionHost": "مضيف الجلسة",
+    "roles": {
+      "customer": "عميل",
+      "admin": "مدير",
+      "Organizer": "منظّم"
+    }
+  },
+  "availableRestaurants": {
+    "title": "المطاعم المتاحة",
+    "loading": "جارٍ تحميل المطاعم...",
+    "empty": "لا توجد مطاعم متاحة"
+  },
+  "restaurantCard": {
+    "viewDetails": "عرض التفاصيل والقائمة",
+    "distance": "{{distance}} كم"
+  },
+  "exploreCuisines": {
+    "title": "استكشف المطابخ",
+    "searchPlaceholder": "ابحث عن مطاعم أو مطابخ",
+    "loading": "جارٍ التحميل...",
+    "all": "الكل"
+  },
+  "activeGroupSessions": {
+    "title": "الجلسات الجماعية النشطة",
+    "goToSession": "الانتقال إلى الجلسة {{number}}"
+  },
+  "activeSession": {
+    "active": "الجلسة نشطة",
+    "host": "المضيف",
+    "you": "أنت",
+    "joining_zero": "لا أحد منضم",
+    "joining_one": "منضم واحد",
+    "joining_two": "منضمان",
+    "joining_few": "{{count}} منضمين",
+    "joining_many": "{{count}} منضمًا",
+    "joining_other": "{{count}} منضم",
+    "confirmOrder": "تأكيد الطلب"
+  },
+  "billBreakdown": {
+    "title": "تفاصيل الفاتورة",
+    "itemsSubtotal": "إجمالي سعر طلباتك",
+    "deliveryShare": "نصيب التوصيل ({{people}} أشخاص)",
+    "totalAmount": "الإجمالي"
+  },
+  "orderedItems": {
+    "title": "الطلبات الخاصة بك",
+    "status": "تم التأكيد والإرسال",
+    "quantityAndUnitPrice": "الكمية: {{quantity}} - {{unitPrice}} جنيه للقطعة",
+    "price": "{{price}} جنيه"
+  },
+  "orderTracking": {
+    "title": "متابعة الطلب مباشرة",
+    "placedStatus": "تم إرسال الطلب للمطعم",
+    "submitted": "تم الإرسال",
+    "restaurant": "المطعم",
+    "arrived": "وصل"
+  },
+  "accountSettings": {
+    "title": "إعدادات الحساب",
+    "items": {
+      "editPersonalDetails": "تعديل البيانات الشخصية",
+      "changePassword": "تغيير كلمة المرور",
+      "securityPrivacy": "الأمان والخصوصية"
+    }
+  },
+  "changePassword": {
+    "description": "أدخل كلمة المرور الحالية واختر كلمة مرور جديدة",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة"
+  },
+  "common": {
+    "cancel": "إلغاء",
+    "saveChanges": "حفظ التغييرات",
+    "currency": "جنيه",
+    "loading": "جارٍ التحميل...",
+    "restaurantNotFound": "المطعم غير موجود"
+  },
+  "editPersonalDetails": {
+    "profilePicture": "الصورة الشخصية",
+    "changeProfilePicture": "تغيير الصورة الشخصية",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة"
+  },
+  "logout": {
+    "button": "تسجيل الخروج"
+  },
+  "preferences": {
+    "title": "التفضيلات والمظهر",
+    "darkMode": "الوضع الداكن",
+    "appLanguage": "لغة التطبيق",
+    "languageValue": "الإنجليزية (الولايات المتحدة)"
+  },
+  "footer": {
+    "itemsSelected_zero": "لم يتم اختيار أي عناصر",
+    "itemsSelected_one": "تم اختيار عنصر واحد",
+    "itemsSelected_two": "تم اختيار عنصرين",
+    "itemsSelected_few": "تم اختيار {{count}} عناصر",
+    "itemsSelected_many": "تم اختيار {{count}} عنصرًا",
+    "itemsSelected_other": "تم اختيار {{count}} عنصر",
+    "totalPrice": "{{total}} جنيه"
+  },
+  "session": {
+    "actions": {
+      "create": "إنشاء جلسة",
+      "join": "الانضمام إلى الجلسة النشطة",
+      "close": "إغلاق الجلسة",
+      "placeOrder": "إرسال الطلب",
+      "markArrived": "تأكيد الوصول",
+      "end": "إنهاء الجلسة",
+      "reopen": "إعادة فتح الجلسة",
+      "cancel": "إلغاء الجلسة"
+    },
+    "menuHeader": "قائمة {{name}}",
+    "confirmAction": "هل أنت متأكد؟"
+  },
+  "itemCard": {
+    "decreaseQuantity": "تقليل الكمية",
+    "increaseQuantity": "زيادة الكمية"
+  }
+}

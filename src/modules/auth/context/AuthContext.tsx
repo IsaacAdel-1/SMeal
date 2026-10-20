@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
+import Cookies from "js-cookie";
 
 type User = {
     userId : string ;
@@ -28,7 +29,8 @@ export function AuthProvider({children} : AuthProviderProps){
 
     const logout = ()=>{
         setUser(null)
-
+        Cookies.remove("token")
+        Cookies.remove("refreshToken")
     }
 
     return (

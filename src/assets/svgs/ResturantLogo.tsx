@@ -1,7 +1,9 @@
 
 export default function ResturanLogo({ className }: { className?: string }) {
   return <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-  <rect x="1" y="1" width="62" height="62" rx="14" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="2"/>
+  <rect x="1" y="1" width="62" height="62" rx="14"   stroke-width="2"
+    className="fill-surface-control stroke-border"
+  />
 
   
   <circle cx="23" cy="27" r="3" fill="#ef4444"/>
