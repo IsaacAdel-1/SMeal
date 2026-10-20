@@ -22,7 +22,7 @@ export default function AppRouter() {
                 <Route path="signup" element={<SignupForm />} />
                 <Route path="verify-otp" element={<OTPForm />} />
                 <Route path="forget-password" element={<ForgetPassword />} />
-                <Route path="change-password" element={<SetNewPasswordForm />} />
+                <Route path="reset-password" element={<SetNewPasswordForm />} />
             </Route>
             
             <Route element={<ProtectedRoute/>}>
