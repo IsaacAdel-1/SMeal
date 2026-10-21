@@ -12,7 +12,7 @@ import HomePage from "./src/modules/home/pages/HomePage";
 import History from "./src/modules/history/pages/History";
 import Profile from "@/modules/Profile/pages/Profile";
 import RestaurantMenuPage from "@/modules/restaurant-menu/pages/RestaurantMenuPage";
-import SetNewPasswordForm from "@/modules/auth/Components/Forms/SetNewPassword";
+import SetNewPasswordForm from "@/modules/auth/Components/Forms/ResetNewPassword";
 export default function AppRouter() {
     return(
         <Routes>

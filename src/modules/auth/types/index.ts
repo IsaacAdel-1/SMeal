@@ -14,3 +14,8 @@ export interface Register {
     password : string ;
    
 }
+export type ResetPasswordParams = {
+  userId: string;
+  token: string;
+  newPassword: string;
+};
