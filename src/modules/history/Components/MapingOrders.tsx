@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
 import useHistory from "../hooks/useHistory";
 
+
 const isArabic = () => i18n.resolvedLanguage === "ar";
 
 export function formatDate(date: string | Date): string {
@@ -21,8 +22,18 @@ export function formatMoney(amount: number): string {
 
 export default function MapingOrders() {
   const { t } = useTranslation();
-  const { data: pastOrders } = useHistory();
-
+  const { data: pastOrders, isLoading, error, refetch } = useHistory();
+  const Orders = pastOrders?.data?.items ?? [];
+  if (Orders.length === 0) return <p className="text-2xl mt-6">{t("history.empty")}</p>;
+  if (isLoading) return <p>{t("history.loading")}</p>;
+  if (error) {
+  return (
+    <div>
+      <p className="text-destructive">{error.message}</p>
+      <button onClick={() => refetch()}>{t("history.retry")}</button>
+    </div>
+  );
+}
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
       {pastOrders?.data?.items?.map((i: any) => {

@@ -25,7 +25,7 @@ export default function LoginForm() {
   const Mail = <MailIcon />;
   const Lock = <LockIcon />;
 
-  const { mutate, isPending } = useLogin();
+  const { mutate, isPending , error} = useLogin();
   const {
     register,
     handleSubmit,
@@ -66,6 +66,7 @@ export default function LoginForm() {
         <button
           type="submit"
           className="bg-linear-to-br rtl:bg-linear-to-bl from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl"
+          disabled={isPending}
         >
           {isPending ? t("login.signingIn") : t("login.signIn")}
         </button>
@@ -76,6 +77,7 @@ export default function LoginForm() {
             {t("login.signUp")}
           </Link>
         </p>
+        {error && <p className="text-sm text-destructive">{error.message}</p>} 
       </form>
     </div>
   );

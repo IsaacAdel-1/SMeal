@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/constants";
 import Cookies from "js-cookie";
 import { apiRequest } from "@/lib/api";
+import i18n from "@/i18n";
 
 export type SessionAction =  "close" | "open" | "order" | "arrive" | "end" | "cancel" | "invoice";
 
@@ -19,7 +20,7 @@ export default async function sessionAction({
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        "Accept-Language": "en",
+        "Accept-Language": i18n.language,
       },
     },
     `${action} failed. Please try again.`,

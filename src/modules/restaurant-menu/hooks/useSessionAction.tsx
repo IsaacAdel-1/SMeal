@@ -10,6 +10,7 @@ export default function useSessionAction() {
     mutationFn: sessionAction,
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
+      queryClient.invalidateQueries({ queryKey: ["my-orders"] });
       if (variables.action === "order") navigate("/orders");
     },
   });

@@ -17,3 +17,13 @@ export interface Invoice {
   deliveryTotal: number; 
   participants: number; 
 }
+
+export type OrderItemRequest = {
+  menuItemId: string;
+  quantity: number;
+};
+
+export type CreateOrderRequest = {
+  sessionId: string;
+  items: OrderItemRequest[];
+};

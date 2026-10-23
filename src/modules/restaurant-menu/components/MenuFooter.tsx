@@ -6,6 +6,7 @@ import {
   ShoppingBag,
   Truck,
   UserPlus,
+  Receipt
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { ActiveSessionType } from "@/modules/home/types";
@@ -43,7 +44,7 @@ export default function MenuFooter({
 }: MenuFooterProps) {
   const { t } = useTranslation();
 
-  const getAction = () => {
+   const getAction = () => {
     if (!session) {
       return {
         label: t("session.actions.create"),
@@ -93,13 +94,21 @@ export default function MenuFooter({
 
     if (session.status === 3) {
       return {
-        label: t("session.actions.end"),
+        label: t("session.actions.invoice"), 
+        icon: Receipt, 
+        onClick: () => onSessionAction("invoice"),
+        style: GREEN,
+      };
+    }
+
+    if (session.status === 4) {
+      return {
+        label: t("session.actions.end"), // النهاية الفعلية بعد إرسال الفاتورة
         icon: Flag,
         onClick: () => onSessionAction("end"),
         style: RED,
       };
     }
-
     return null;
   };
 

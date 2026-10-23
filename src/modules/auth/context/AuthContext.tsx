@@ -22,7 +22,10 @@ type AuthProviderProps = {
 }
 
 export function AuthProvider({children} : AuthProviderProps){
-    const [user , setUser] = useState <User | null >(null)
+    const [user , setUser] = useState <User | null >(() => {
+    const savedUser = Cookies.get("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+})
     const login = (userData : User) =>{
         setUser(userData) 
         Cookies.set("user" , JSON.stringify(userData))
@@ -32,6 +35,7 @@ export function AuthProvider({children} : AuthProviderProps){
         setUser(null)
         Cookies.remove("token")
         Cookies.remove("refreshToken")
+        Cookies.remove("user")
     }
 
     return (

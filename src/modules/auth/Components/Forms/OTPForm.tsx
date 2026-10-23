@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useOTP from "../../hooks/useOTP";
 import type { OTPFormData } from "../../types";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import useResendCode from "../../hooks/useResendCode";
 
 export default function OTPForm() {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ export default function OTPForm() {
 
   const location = useLocation();
   const email = location.state?.email;
-
+  if (!email) return <Navigate to="/signup" replace />;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
     if (!/^\d?$/.test(e.target.value)) return;
     const OTP = [...OTPValues];
@@ -43,6 +44,8 @@ export default function OTPForm() {
     const { OTP0, OTP1, OTP2, OTP3 } = data;
     sendOTP({ code: OTP0 + OTP1 + OTP2 + OTP3, email: email });
   };
+  const code = OTPValues.join("");
+  const { mutate: resend, isPending: isResending, isSuccess: resent, error: resendError } = useResendCode();
 
   return (
     <div className="mt-40">
@@ -56,6 +59,7 @@ export default function OTPForm() {
         <div dir="ltr" className="flex gap-2 mb-10">
           {otpFields.map((field, i) => {
             const { onChange, ref, ...rest } = register(field);
+            
             return (
               <input
                 type="text"
@@ -80,7 +84,9 @@ export default function OTPForm() {
           })}
         </div>
 
-        <button className="bg-linear-to-br rtl:bg-linear-to-bl from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl">
+        <button className="bg-linear-to-br rtl:bg-linear-to-bl from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl"
+          disabled={code.length !== length || isPending}
+        >
           {isPending ? t("otp.sending") : t("otp.verify")}
         </button>
       </form>
@@ -91,9 +97,17 @@ export default function OTPForm() {
 
       <p>
         {t("otp.noCode")}{" "}
-        <button type="button" className="text-brand font-semibold cursor-pointer">
-          {t("otp.resend")}
+        <button
+          type="button"
+          disabled={isResending}
+          onClick={() => resend({ email }, { onSuccess: () => setOTPValues(Array(length).fill("")) })}
+          className="text-brand font-semibold cursor-pointer disabled:opacity-60"
+        >
+          {isResending ? t("otp.resending") : t("otp.resend")}
         </button>
+
+        {resent && <p className="text-sm text-green-600">{t("otp.resent")}</p>}
+        {resendError && <p className="text-sm text-destructive">{resendError.message}</p>}
       </p>
     </div>
   );

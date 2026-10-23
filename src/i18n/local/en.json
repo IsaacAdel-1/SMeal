@@ -76,7 +76,10 @@
   "totalPastSpent": "Total Past Spent",
   "completedOrders": "Completed Orders",
   "sessions_one": "{{count}} Session",
-  "sessions_other": "{{count}} Sessions"
+  "sessions_other": "{{count}} Sessions",
+  "loading" : "Loading history",
+  "retry" : "Retry fetching data",
+  "empty" : "History is empty"
 },
 "homeNavbar": {
   "sessionHost": "Session host",
@@ -109,9 +112,20 @@
   "active": "Session Active",
   "host": "Host",
   "you": "You",
+  "joining_zero": "No one joining",
   "joining_one": "{{count}} Joining",
+  "joining_two": "{{count}} Joining",
+  "joining_few": "{{count}} Joining",
+  "joining_many": "{{count}} Joining",
   "joining_other": "{{count}} Joining",
-  "confirmOrder": "Confirm Order"
+  "confirmOrder": "Confirm Order",
+  "closeOrder": "Close Order",
+  "placeOrder": "Place Order",
+  "markArrived": "Mark Arrived",
+  "makeInvoiceDraft": "Make Invoice Draft",
+  "endSession": "End Session",
+  "reopenSession": "Reopen Session",
+  "cancelSession": "Cancel Session"
 },
 "billBreakdown": {
     "title": "Bill Breakdown",

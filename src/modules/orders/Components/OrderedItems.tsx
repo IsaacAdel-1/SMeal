@@ -1,16 +1,17 @@
 
 import BagIcon from "../../../assets/svgs/BagIcon";
-import type { OrderItemsType } from "../types";
+import type { MenuItem } from "../types";
 import { useTranslation } from "react-i18next";
 
 export default function OrderedItems({
   orderDetails,
 }: {
-  orderDetails: OrderItemsType[];
+  orderDetails: MenuItem[];
 }) {
 const { t } = useTranslation();
   return (
-    <div className="bg-card text-card-foreground max-w-120 rounded-2xl mt-8 min-h-100 border border-border p-4">
+    // <div className="bg-card text-card-foreground max-w-120 rounded-2xl mt-8  border border-border p-4">
+    <div className="bg-card text-card-foreground rounded-2xl border border-border p-4">
       <header className="flex items-center justify-between">
         <p className="text-xl flex text-card-foreground items-center gap-2">
           <BagIcon className="text-brand size-4" />

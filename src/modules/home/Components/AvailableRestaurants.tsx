@@ -14,6 +14,7 @@ export default function AvailableRestaurants({
   const { data, error, isError, isPending } = useResturants({
     search: search,
     restaurantCategoryId: selectedCat,
+    
   });
 
   if (isPending) return <p className="mt-5 text-muted-foreground">{t("availableRestaurants.loading")}</p>;
@@ -27,7 +28,7 @@ export default function AvailableRestaurants({
         {t("availableRestaurants.title")}
       </h2>
 
-      <div className="grid grid-cols-2 gap-6 max-[640px]:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 max-[930px]:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
         {data.data.items.map((res: Resturant) => (
           <ResturantCard key={res.id} {...res} />
         ))}

@@ -2,11 +2,10 @@ import { MdOutlineAccessTime } from "react-icons/md";
 import { FaUserShield } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
 import Lamb from "./Lamb";
-import LockIcon from "../../../../assets/svgs/LockIcon";
 import type { ActiveSessionType } from "../../types";
 import useSessionAction from "@/modules/restaurant-menu/hooks/useSessionAction";
+import { getAction } from "../../hooks/useSessionPrimaryAction";
 
 const parseUtc = (date: string) => {
   const hasZone = /Z|[+-]\d{2}:?\d{2}$/.test(date);
@@ -31,20 +30,42 @@ export default function ActiveSession({ session }: { session: ActiveSessionType 
   } = session;
 
   const [totalSeconds, setTotalSeconds] = useState(() => getRemaining(expectedClosedAt));
+  const { mutate, isPending } = useSessionAction();
 
   useEffect(() => {
+    if (session.status !== 0) return;
+
     const id = setInterval(() => {
-      setTotalSeconds(getRemaining(expectedClosedAt));
+      const remaining = getRemaining(expectedClosedAt);
+      setTotalSeconds(remaining);
+
+      if (remaining === 0) {
+        clearInterval(id);
+
+        if (currentUserIsOwner) {
+          mutate({ sessionId, action: "close" });
+        }
+      }
     }, 1000);
 
     return () => clearInterval(id);
-  }, [expectedClosedAt]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expectedClosedAt, session.status]);
 
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-  const {mutate : ConfirmOrder , isPending : ConfirmPending}= useSessionAction()
-  const {mutate : Order , isPending : OrderPending }= useSessionAction()
+  const displaySeconds = session.status === 0 ? totalSeconds : 0;
+  const hours = Math.floor(displaySeconds / 3600);
+  const minutes = Math.floor((displaySeconds % 3600) / 60);
+  const seconds = displaySeconds % 60;
+
+  const action = getAction({
+    t,
+    session,
+    onCreateSession: () => {},
+    onJoinSession: () => {},
+    onSessionAction: (a) => mutate({ sessionId, action: a }),
+  });
+  const Icon = action?.icon;
+
   return (
     <div className="rounded-2xl border border-border bg-card p-6">
       <header className="flex items-center justify-between">
@@ -70,29 +91,16 @@ export default function ActiveSession({ session }: { session: ActiveSessionType 
         </p>
       </div>
 
-      {currentUserIsOwner  && session.status === 0 && (
+      {currentUserIsOwner && action && Icon && (
         <div>
           <div className="my-4 h-px w-full bg-border" />
-          <button className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong font-bold text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]"
-            onClick={()=>{ConfirmOrder({sessionId , action : "close"})}}
-            disabled={ConfirmPending}
+          <button
+            className={`flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l font-bold text-white ${action.style}`}
+            onClick={action.onClick}
+            disabled={isPending}
           >
-            <LockIcon className="size-4" />
-            {t("activeSession.confirmOrder")}
-          </button>
-        </div>
-      )}
-
-      {currentUserIsOwner  && session.status === 1 && (
-        <div>
-          <div className="my-4 h-px w-full bg-border" />
-          <button className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong font-bold text-white shadow-[0_8px_24px_rgba(255,59,48,0.35)]"
-            onClick={()=>{Order({sessionId , action : "order"})}}
-            disabled={OrderPending}
-          >
-            <LockIcon className="size-4" />
-            {/* {t("activeSession.confirmOrder")} */}
-            Order
+            <Icon className="size-4" />
+            {action.label}
           </button>
         </div>
       )}

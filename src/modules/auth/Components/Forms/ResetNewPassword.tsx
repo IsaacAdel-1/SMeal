@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import useResetNewPassword from "../../hooks/useResetNewPassword";
 
+
 const schema = z
   .object({
     newPassword: z.string().min(8, "setNewPassword.errors.passwordMin"),
@@ -33,11 +34,10 @@ export default function SetNewPasswordForm() {
 
   const { mutate: ResetNewPassword, isPending, error } = useResetNewPassword();
   const onSubmit = (data: FormData) => {
-    console.log("submit", { userId, token, data })
+    
     if (!userId || !token) return;
     ResetNewPassword({userId , token , newPassword: data.newPassword })
   };
-
   if (!userId || !token) {
   return <p>{t("setNewPassword.errors.invalidLink")}</p>; 
 }

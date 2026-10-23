@@ -75,7 +75,10 @@
     "sessions_two": "جلستان",
     "sessions_few": "{{count}} جلسات",
     "sessions_many": "{{count}} جلسة",
-    "sessions_other": "{{count}} جلسة"
+    "sessions_other": "{{count}} جلسة",
+    "loading" : "جاري تحميل الطلبات..",
+    "retry" : "اعادة تحميل الطلبات",
+    "empty" : "لا توجد طلبات موجودة"
   },
   "orders": {
     "header": "طلباتي",
@@ -109,17 +112,24 @@
     "goToSession": "الانتقال إلى الجلسة {{number}}"
   },
   "activeSession": {
-    "active": "الجلسة نشطة",
-    "host": "المضيف",
-    "you": "أنت",
-    "joining_zero": "لا أحد منضم",
-    "joining_one": "منضم واحد",
-    "joining_two": "منضمان",
-    "joining_few": "{{count}} منضمين",
-    "joining_many": "{{count}} منضمًا",
-    "joining_other": "{{count}} منضم",
-    "confirmOrder": "تأكيد الطلب"
-  },
+  "active": "الجلسة نشطة",
+  "host": "المضيف",
+  "you": "أنت",
+  "joining_zero": "لا أحد منضم",
+  "joining_one": "منضم واحد",
+  "joining_two": "منضمان",
+  "joining_few": "{{count}} منضمين",
+  "joining_many": "{{count}} منضمًا",
+  "joining_other": "{{count}} منضم",
+  "confirmOrder": "تأكيد الطلب",
+  "closeOrder": "إغلاق الطلب",
+  "placeOrder": "تنفيذ الطلب",
+  "markArrived": "تحديد كوصل",
+  "makeInvoiceDraft": "إنشاء مسودة الفاتورة",
+  "endSession": "إنهاء الجلسة",
+  "reopenSession": "إعادة فتح الجلسة",
+  "cancelSession": "إلغاء الجلسة"
+},
   "billBreakdown": {
     "title": "تفاصيل الفاتورة",
     "itemsSubtotal": "إجمالي سعر طلباتك",
