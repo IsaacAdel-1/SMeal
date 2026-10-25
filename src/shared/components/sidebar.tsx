@@ -1,11 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Logo from "../../assets/images/sm_logo.png";
 import { sidebarItems } from "../../constants/sidebarItems";
-import { useState } from "react";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/modules/auth/context/AuthContext";
 import Cookies from "js-cookie";
+
 export type User = {
   id: number;
   fullName: string;
@@ -26,7 +26,6 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   const initialLetters = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase();
-  const [activeItem, setActiveItem] = useState(sidebarItems[0].key);
 
   return (
     <div className="bg-surface w-75 min-h-screen p-4 flex flex-col justify-between sticky top-0 bottom-0">
@@ -45,19 +44,20 @@ export default function Sidebar() {
 
         <ul className="flex flex-col gap-2">
           {sidebarItems.map((item) => (
-            <li
-              key={item.key}
-              onClick={() => setActiveItem(item.key)}
-              className={`text-muted-foreground font-semibold p-2 rounded-2xl ${
-                activeItem === item.key
-                  ? "bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong text-white"
-                  : "hover:bg-surface-raised hover:text-foreground"
-              }`}
-            >
-              <Link to={item.path} className="flex items-center gap-2">
+            <li key={item.key}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 text-muted-foreground font-semibold p-2 rounded-2xl ${
+                    isActive
+                      ? "bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong text-white"
+                      : "hover:bg-surface-raised hover:text-foreground"
+                  }`
+                }
+              >
                 <item.icon size={27} />
                 <p>{t(`sidebar.items.${item.key}`)}</p>
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

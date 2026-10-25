@@ -13,6 +13,7 @@ import History from "./src/modules/history/pages/History";
 import Profile from "@/modules/Profile/pages/Profile";
 import RestaurantMenuPage from "@/modules/restaurant-menu/pages/RestaurantMenuPage";
 import SetNewPasswordForm from "@/modules/auth/Components/Forms/ResetNewPassword";
+import OrderInvoice from "@/modules/orders/pages/OrderInvoice";
 export default function AppRouter() {
     return(
         <Routes>
@@ -30,6 +31,7 @@ export default function AppRouter() {
                         <Route path="home" element={<HomePage/>} />
                         <Route path="restaurants/:restaurantId" element={<RestaurantMenuPage />} />
                         <Route path="orders" element={<Orders />} />
+                        <Route path="/orders/:sessionId/invoice" element={<OrderInvoice />} />
                         <Route path="history" element={<History />} />
                         <Route path="settings" element={<Profile />} />
                     </Route>

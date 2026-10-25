@@ -1,10 +1,13 @@
 import CalculatorIcon from "../../../assets/svgs/CalculatorIcon";
 import { useTranslation } from "react-i18next";
+import type { SessionItem } from "../types";
 
 export default function BillBreakdown({
   totalPrice,
+  order
 }: {
   totalPrice: number;
+  order : SessionItem
 }) {
   const { t } = useTranslation();
   const totalDilevery = 40;
@@ -19,7 +22,7 @@ export default function BillBreakdown({
           <CalculatorIcon className="text-brand" />
           {t("billBreakdown.title")}
         </p>
-        <p className="text-muted-foreground">Restaurant Name</p>
+        <p className="text-muted-foreground">{order.restaurantName}</p>
       </header>
 
       <div className="flex justify-between items-center my-3">

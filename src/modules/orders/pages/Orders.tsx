@@ -18,23 +18,19 @@ const LEFT_COL = "w-full min-w-0 lg:w-1/2 lg:shrink-0";
 const ACTION_BUTTON =
   "rounded-xl bg-success px-6 py-3 text-lg font-semibold transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50";
 
-const ACTION_TEXT = {
-  arrived:
-    "Your order has arrived from the restaurant. Confirm to mark it as arrived.",
-  invoice: "Upload the receipt and the delivery cost for this order.",
-};
+
 
 export default function Orders() {
   const { t } = useTranslation();
-
+  
   const { data: ordersData, isLoading, isError } = useMyOrders();
   const { mutate: makeArrived, isPending } = useMakeArrived();
 
   const orders = ordersData?.data?.items ?? [];
 
-  if (isLoading) {
-    return <p className="m-auto text-xl font-semibold">...</p>;
-  }
+ if (isLoading) {
+  return <p className="m-auto text-xl font-semibold">{t("common.loading")}</p>;
+}
 
   if (isError || !ordersData) {
     return (
@@ -67,9 +63,9 @@ export default function Orders() {
               type="single"
               collapsible
               
-              className="w-full"
+              className="w-full  flex justify-center items-center"
             >
-              <AccordionItem value={order.orderId} className="border-none min-w-0">
+              <AccordionItem value={order.orderId} className="border-none min-w-full ">
                 <AccordionTrigger
                   headerClassName={LEFT_COL}
                   className="p-0 hover:no-underline"
@@ -84,8 +80,8 @@ export default function Orders() {
                     <div
                       className={`${LEFT_COL} flex flex-col items-center gap-4 mb-5 rounded-2xl border border-[#232428] bg-[#101116] p-4 text-center`}
                     >
-                      <p className="text-muted-foreground">
-                        {showArrived ? ACTION_TEXT.arrived : ACTION_TEXT.invoice}
+                     <p className="text-muted-foreground">
+                        {showArrived ? t("orders.arrivedPrompt") : t("orders.invoicePrompt")}
                       </p>
 
                       {showArrived ? (
@@ -95,12 +91,12 @@ export default function Orders() {
                           className={ACTION_BUTTON}
                           onClick={() => makeArrived(order.sessionId)}
                         >
-                          Mark as arrived
+                         {t("session.actions.markArrived")}
                         </button>
                       ) : (
                         <UploadReceiptDialog sessionId={order.sessionId}>
                           <button type="button" className={ACTION_BUTTON}>
-                            Invoice
+                            {t("orders.invoiceButton")}
                           </button>
                         </UploadReceiptDialog>
                       )}
@@ -115,7 +111,7 @@ export default function Orders() {
                     </div>
 
                     <div className="w-full min-w-0 flex lg:flex-1 [&>*]:w-full! [&>*]:max-w-full! [&>*]:min-w-0!">
-                      <BillBreakdown totalPrice={totalPrice} />
+                      <BillBreakdown totalPrice={totalPrice} order={order}/>
                     </div>
                   </div>
                 </AccordionContent>
@@ -124,6 +120,7 @@ export default function Orders() {
           );
         })}
       </div>
+       
     </>
   );
 }

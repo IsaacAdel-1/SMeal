@@ -81,9 +81,12 @@
     "empty" : "لا توجد طلبات موجودة"
   },
   "orders": {
-    "header": "طلباتي",
-    "noActiveSession":"لا يوجد جلسات نشطة"
-  },
+  "header": "طلباتي",
+  "noActiveSession": "لا يوجد جلسات نشطة",
+  "arrivedPrompt": "وصل طلبك من المطعم. اضغط للتأكيد وتحديده كواصل.",
+  "invoicePrompt": "ارفع صورة الإيصال وتكلفة التوصيل لهذا الطلب.",
+  "invoiceButton": "الفاتورة"
+},
   "homeNavbar": {
     "sessionHost": "مضيف الجلسة",
     "roles": {
@@ -227,5 +230,34 @@
     "confirmRequired": "من فضلك أكّد كلمة المرور",
     "mismatch": "كلمتا المرور غير متطابقتين"
   }
+},
+"invoice": {
+  "title": "الفاتورة",
+  "item": "الصنف",
+  "price": "السعر",
+  "quantity": "الكمية",
+  "edit": "تعديل",
+  "editItem": "تعديل {{name}}",
+  "confirmEdit": "تأكيد التعديل",
+  "itemName": "اسم الصنف",
+  "people": "الطلبات حسب الشخص",
+  "participants_zero": "لا يوجد مشاركون",
+  "participants_one": "مشارك واحد",
+  "participants_two": "مشاركان",
+  "participants_few": "{{count}} مشاركين",
+  "participants_many": "{{count}} مشاركًا",
+  "participants_other": "{{count}} مشارك",
+  "foodTotal": "إجمالي الطعام",
+  "delivery": "التوصيل",
+  "grandTotal": "الإجمالي الكلي",
+  "food": "الطعام",
+  "deliveryShare": "نصيب التوصيل",
+  "total": "الإجمالي",
+  "paid": "مدفوع",
+  "unpaid": "غير مدفوع",
+  "notMatched": "غير مطابق",
+  "approved": "تم اعتماد الفاتورة",
+  "noItems": "لا توجد أصناف",
+  "approve": "اعتماد الفاتورة"
 }
 }

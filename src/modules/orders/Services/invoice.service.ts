@@ -11,15 +11,17 @@ export const invoice = async (sessionId: string, fee: number, file: File) => {
     const response = await fetch(`${BASE_URL}/api/breakfast-sessions/${sessionId}/invoice`, {
       method: "POST", 
       headers: {
-        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
       body : formData,
     });
 
     if (!response.ok) {
-      throw new Error("Error while ");
-    }
+    const errorText = await response.text().catch(() => "");
+    throw new Error(
+      errorText || `Invoice request failed (${response.status})`,
+    );
+  }
 
     const data = await response.json();
     return data;

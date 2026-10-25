@@ -41,7 +41,7 @@ export default function UploadReceiptDialog({ sessionId , children}: { sessionId
         {children}
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="bg-card">
         <DialogHeader>
           <DialogTitle>Upload receipt</DialogTitle>
         </DialogHeader>
