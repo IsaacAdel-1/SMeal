@@ -25,7 +25,9 @@ export default function AvailableRestaurants({
     if (data && data.totalPages > 0 && page > data.totalPages) setPage(data.totalPages);
   }, [data, page, setPage]);
 
-  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [page]);
+ useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, [page]);
 
   if (isPending) return <p className="mt-5 text-muted-foreground">{t("availableRestaurants.loading")}</p>;
   if (isError) return <p className="mt-5 text-red-500">{error.message}</p>;
