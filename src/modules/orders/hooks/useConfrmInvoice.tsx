@@ -9,7 +9,7 @@ export default function useConfirmInvoice() {
     mutationFn: (sessionId: string) => confirmInvoice(sessionId),
     onSuccess: () => {
       toast.success("Invoice confirmed successfully.");
-      queryClient.invalidateQueries({ queryKey: ["my-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
     },
     onError: (error) => {

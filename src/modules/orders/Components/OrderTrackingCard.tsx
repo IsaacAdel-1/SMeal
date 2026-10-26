@@ -1,13 +1,14 @@
 
-import TrackingIcon from "../../../assets/svgs/TrackingIcon";
 import { Check, Store, Bike } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { SessionItem } from "../types";
+import type { OrderSession } from "../types";
+import { formatDate } from "@/modules/history/Components/MapingOrders";
+import { getSessionStatusLabel } from "../utils/sessionStatus";
 
 export default function OrderTrackingCard({
   myOrders,
 }: {
-  myOrders: SessionItem;
+  myOrders: OrderSession;
 }) {
   const { t } = useTranslation();
   const status = myOrders.status;
@@ -16,19 +17,25 @@ export default function OrderTrackingCard({
     <>
       
       <div 
-      key={myOrders.orderId || myOrders.sessionId}
-      className="lg:w-120 max-w-120 p-6 bg-card text-card-foreground rounded-2xl border border-border mb-4"
+      className="w-full p-6 bg-card text-card-foreground rounded-2xl border border-border mb-4"
       >
         <header className="flex items-center justify-between mb-6 gap-4">
-          <p className="flex items-center text-card-foreground font-bold gap-2">
-            <TrackingIcon className="text-brand" />
-            {t("orderTracking.title")}
-          </p>
-
-          <p className="text-success">
-            {t("orderTracking.placedStatus")}
-          </p>
+          <div className="flex min-w-0 items-center gap-3">
+            {myOrders.logoUrl && <img src={myOrders.logoUrl} alt="" className="size-12 rounded-xl object-cover" />}
+            <div className="min-w-0">
+              <p className="truncate font-bold">{myOrders.restaurantName}</p>
+              <p className="text-sm text-muted-foreground">{t("orderTracking.title")}</p>
+            </div>
+          </div>
+          <span className="rounded-full bg-surface-raised px-3 py-1 text-sm font-semibold">{getSessionStatusLabel(status)}</span>
         </header>
+
+        <div className="mb-5 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+          <p>Owner: <bdi className="text-card-foreground">{myOrders.ownerName}</bdi></p>
+          <p>Participants: <bdi className="text-card-foreground">{myOrders.participantCount}</bdi></p>
+          <p>Started: <bdi className="text-card-foreground">{formatDate(myOrders.startedAt)}</bdi></p>
+          <p>Expected close: <bdi className="text-card-foreground">{formatDate(myOrders.expectedClosedAt)}</bdi></p>
+        </div>
 
         <div className="flex items-center">
           <span

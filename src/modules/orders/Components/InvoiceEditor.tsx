@@ -14,8 +14,11 @@ import type { Props } from "../types";
 import { buildInvoicePayload } from "../utils/buildInvoicePayload";
 import useUpdateInvoice from "../hooks/useUpdateInvoice";
 import useConfirmInvoice from "../hooks/useConfrmInvoice";
-
+import { applyItemUpdate } from "../utils/applyUpdateItems";
+import useSession from "../hooks/useSession";
+import useEndSession from "../hooks/useEndSession";
 type EditableField = "name" | "quantity" | "unitPrice";
+
 
 export function OrderTable({
   sessionId, 
@@ -24,7 +27,7 @@ export function OrderTable({
   isApproved = false,
 }: Props) {
   const [participants, setParticipants] = useState(initialParticipants);
-
+  const { data } = useSession(sessionId)
   const [editingId, setEditingId] = useState<string | null>(null);
   
   const {
@@ -39,45 +42,32 @@ export function OrderTable({
   } = useConfirmInvoice();
   const loading = UpdateLoading || ConfirmLoading ;   
   
+  const { mutate: endSession } = useEndSession();
+
   const updateItem = (
-    participantId: string,
-    itemId: string,
-    field: EditableField,
-    value: string | number
-  ) => {
-    setParticipants((prev) =>
-      prev.map((p) => {
-        if (p.participantId !== participantId) return p;
-
-        const items = p.items.map((item) => {
-          if (item.orderItemId !== itemId) return item;
-
-          const updated = { ...item, [field]: value };
-          return { ...updated, total: updated.quantity * updated.unitPrice };
-        });
-
-        const foodAmount = items.reduce((sum, i) => sum + i.total, 0);
-
-        return {
-          ...p,
-          items,
-          foodAmount,
-          totalAmount: foodAmount + p.deliveryShare,
-        };
-      })
-    );
-  };
+  participantId: string,
+  itemId: string,
+  field: EditableField,
+  value: string | number
+) => {
+  setParticipants((prev) =>
+    applyItemUpdate(prev, participantId, itemId, field, value)
+  );
+};
   const onConfirm = ()=>{
-    
+    console.log(participants)
     const payload = buildInvoicePayload(initialParticipants , participants) ;
     if(!payload) {confirm(sessionId)}
-    else if (!!payload){ updateInvoice({sessionId , payload})}
+    else if (payload){ updateInvoice({sessionId , payload})}
+  }
+  const EndSession = ()=>{
+    endSession(sessionId)
   }
   const foodTotal = participants.reduce((sum, p) => sum + p.foodAmount, 0);
   const grandTotal = foodTotal + deliveryCost;
   
   return (
-    <div className="shrink-0">
+    <div className="shrink-0 flex-1">
     <Table className="">
       <TableHeader>
         <TableRow>
@@ -206,15 +196,26 @@ export function OrderTable({
         </TableRow>
       </TableFooter>
     </Table>
+        {data?.status === 5 ?
+          <button
+            type="button"
+            onClick={EndSession}
+            disabled={loading}
+            className="rounded-md bg-green-600 px-4 py-2 text-white disabled:opacity-50"
+      >
+        {loading ? "Sending..." : "End Session"}
+      </button> :
 
-    <button
-      type="button"
-      onClick={onConfirm}
-      disabled={loading}
-      className="rounded-md bg-green-600 px-4 py-2 text-white disabled:opacity-50"
-    >
+        <button
+          type="button"
+          onClick={onConfirm}
+          disabled={loading}
+          className="rounded-md bg-green-600 px-4 py-2 text-white disabled:opacity-50"
+        >
       {loading ? "Confirming..." : "Confirm"}
     </button>
+        }
+    
     {(updateError || confirmError) && (
       <p role="alert" className="mt-2 text-sm text-destructive">
         {(updateError ?? confirmError)?.message || "Something went wrong. Please try again."}

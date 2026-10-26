@@ -1,6 +1,7 @@
 import { BASE_URL } from "@/constants";
 import Cookies from "js-cookie"
 import { apiRequest } from "@/lib/api";
+import i18n from "@/i18n";
 
 export default async function createSession(restaurantId : string , items : {menuItemId : string ; quantity : number}[]) {
     const token = Cookies.get("token")
@@ -8,7 +9,7 @@ export default async function createSession(restaurantId : string , items : {men
         headers : {
             "Content-Type" : "application/json",
             Authorization: `Bearer ${token}`,
-            "Accept-Language": "en",
+            "Accept-Language": i18n.language ,
         },
         body: JSON.stringify({restaurantId , items}),
         method : "POST"

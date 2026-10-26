@@ -1,4 +1,4 @@
-export interface Resturant {
+export interface Restaurant {
         id: string;
         name: string;
         phoneNumber: string;
@@ -6,6 +6,8 @@ export interface Resturant {
         logoUrl: string
         maximumDeliveryDistanceKm: number ;
 }
+
+export type Resturant = Restaurant;
 
 export interface ActiveSessionType {
   sessionId: string;

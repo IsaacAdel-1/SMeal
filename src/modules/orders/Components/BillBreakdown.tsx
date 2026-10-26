@@ -1,13 +1,13 @@
 import CalculatorIcon from "../../../assets/svgs/CalculatorIcon";
 import { useTranslation } from "react-i18next";
-import type { SessionItem } from "../types";
+import type { OrderSession } from "../types";
 
 export default function BillBreakdown({
   totalPrice,
   order
 }: {
   totalPrice: number;
-  order : SessionItem
+  order : OrderSession
 }) {
   const { t } = useTranslation();
   const totalDilevery = 40;

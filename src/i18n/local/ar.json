@@ -4,7 +4,7 @@
     "logout": "تسجيل الخروج",
     "roles": {
       "customer": "عميل",
-      "admin": "مدير",
+      "Organizer": "منظّم",
       "chef": "شيف"
     },
     "items": {

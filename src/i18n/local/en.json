@@ -4,7 +4,7 @@
     "logout": "Log out",
     "roles": {
       "customer": "Customer",
-      "admin": "Admin",
+      "Organizer": "Organizer",
       "chef": "Chef"
     },
     "items": {

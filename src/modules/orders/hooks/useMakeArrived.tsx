@@ -7,7 +7,7 @@ export default function useMakeArrived() {
   return useMutation({
     mutationFn: (sessionId: string) => makeArrived(sessionId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["my-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
     },
     onError: (error) => {

@@ -11,7 +11,7 @@ export default function useUpdateInvoice() {
       updateInvoice({ sessionId, payload }),
     onSuccess: () => {
       toast.success("Invoice updated successfully.");
-      queryClient.invalidateQueries({ queryKey: ["my-orders"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
       queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
     },
     onError: (error) => {

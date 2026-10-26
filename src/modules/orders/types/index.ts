@@ -1,11 +1,13 @@
-export interface MenuItem {
+import type { ApiResponse, PaginatedResponse } from "@/shared/types/pagination";
+
+export interface SessionItem {
   menuItemId: string;
   menuItemName: string;
   quantity: number;
   unitPrice: number;
 }
 
-export interface SessionItem {
+export interface OrderSession {
   sessionId: string;
   restaurantId: string;
   restaurantName: string;
@@ -18,25 +20,12 @@ export interface SessionItem {
   deliveryShare: number;
   participantCount: number;
   orderId: string;
-  items: MenuItem[];
+  items: SessionItem[];
 }
 
-export interface PaginatedData<T> {
-  items: T[];
-  pageNumber: number;
-  pageSize: number;
-  totalCount: number;
-  totalPages: number;
-}
-
-export interface ApiEnvelope<T> {
-  isSuccess: boolean;
-  message: string;
-  data: T;
-  errors?: string[];
-}
-
-export type SessionsResponse = ApiEnvelope<PaginatedData<SessionItem>>;
+export type MenuItem = SessionItem;
+export type SessionsResponse = ApiResponse<PaginatedResponse<OrderSession>>;
+export type ApiEnvelope<T> = ApiResponse<T>;
 
 
 type Item = {
@@ -64,4 +53,38 @@ export type Props = {
   deliveryCost: number;
   participants: Participant[];
   isApproved?: boolean;
+};
+
+
+
+export type SessionItemProps = {
+  menuItemId: string;
+  menuItemName: string;
+  quantity: number;
+  unitPrice: number;
+};
+
+export type SessionParticipant = {
+  participantId: string;
+  participantName: string;
+  paymentStatus: number;
+  deliveryShare: number;
+  orderId: string;
+  items: SessionItemProps[];
+};
+
+export type SessionDetails = {
+  sessionId: string;
+  restaurantId: string;
+  restaurantName: string;
+  logoUrl: string | null;
+  ownerId: string;
+  ownerName: string;
+  status: number;
+  startedAt: string;
+  expectedClosedAt: string;
+  participantCount: number;
+  currentUserIsOwner: boolean;
+  invoiceUrl: string | null;
+  participants: SessionParticipant[];
 };

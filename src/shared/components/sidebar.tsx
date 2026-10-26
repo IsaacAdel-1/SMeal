@@ -9,13 +9,13 @@ import Cookies from "js-cookie";
 export type User = {
   id: number;
   fullName: string;
-  role: "customer" | "admin" | "chef";
+  role: "customer" | "Organizer" | "chef";
 };
 
 export const mockUser: User = {
   id: 1,
   fullName: "Ahmed Hassan",
-  role: "customer",
+  role: "Organizer",
 };
 
 export default function Sidebar() {

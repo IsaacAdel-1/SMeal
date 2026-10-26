@@ -2,6 +2,7 @@ import { BASE_URL } from "@/constants";
 import Cookies from "js-cookie"
 import type { items } from "../types";
 import { apiRequest } from "@/lib/api";
+import i18n from "@/i18n";
 
 export default async function joinSession(sessionId : string , items : items[]) {
     const token = Cookies.get("token")
@@ -9,7 +10,7 @@ export default async function joinSession(sessionId : string , items : items[]) 
         headers : {
             "Content-Type" : "application/json",
             Authorization: `Bearer ${token}`,
-            "Accept-Language": "en",
+            "Accept-Language": i18n.language ,
         },
         body: JSON.stringify({sessionId , items}),
         method : "POST"

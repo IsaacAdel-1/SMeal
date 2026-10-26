@@ -2,6 +2,7 @@ import { BASE_URL } from "@/constants";
 import Cookies from "js-cookie"
 import type { RestaurantResponse } from "../types";
 import { apiRequest } from "@/lib/api";
+import i18n from "@/i18n";
 
 export default async function getRestaurant(restaurantId : string) :Promise<RestaurantResponse> {
     const token = Cookies.get("token")
@@ -9,7 +10,7 @@ export default async function getRestaurant(restaurantId : string) :Promise<Rest
         headers : {
             "Content-Type" : "application/json",
             Authorization: `Bearer ${token}`,
-            "Accept-Language": "en",
+            "Accept-Language": i18n.language,
         }
     }, "Failed to get restaurant");
 }
