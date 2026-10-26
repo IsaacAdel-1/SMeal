@@ -35,7 +35,7 @@ export default function Orders() {
     if (ordersData && ordersData.totalPages > 0 && page > ordersData.totalPages) setPage(ordersData.totalPages);
   }, [ordersData, page, setPage]);
 
-  useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), [page]);
+  useEffect(() => {window.scrollTo({ top: 0, behavior: "smooth" })}, [page]);
 
   if (isLoading) {
     return (
