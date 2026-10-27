@@ -11,58 +11,49 @@ export interface CustomInputProps {
   ref: React.Ref<HTMLInputElement>;
 }
 
+const FLOAT =
+  "top-1 bg-card px-1 text-[12px] font-bold text-brand";
+
 export default function CustomInput({
   label,
   icon,
   type = "text",
-  onChange,
   ...inputProps
 }: CustomInputProps) {
-  const [InputFocus, setInputFocus] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const isPassword = type === "password";
   const inputType = isPassword && showPassword ? "text" : type;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value) setInputFocus(true);
-    setHasValue(!!value);
-    onChange(e);
-  };
-
   return (
-    <div
-      className="relative w-full"
-      onFocus={() => setInputFocus(true)}
-      onBlur={() => setInputFocus(false)}
-    >
+    <div className="relative w-full">
+      <input
+        {...inputProps}
+        type={inputType}
+        placeholder=" "
+        className="peer h-14 w-full rounded-xl border border-border bg-card px-10 pt-4 text-start text-card-foreground outline-0
+          autofill:shadow-[inset_0_0_0_1000px_var(--card)]
+          autofill:[-webkit-text-fill-color:var(--card-foreground)]"
+      />
+
       <label
-        className={`pointer-events-none absolute left-10 ${InputFocus || hasValue ? "top-0 text-brand text-[12px] font-bold" : "top-1/2 -translate-y-1/2 text-muted-foreground text-[14px]"}`}
+        className={`pointer-events-none absolute start-10 top-1/3 z-10 -translate-y-1/2 text-[14px] text-muted-foreground transition-all
+          peer-focus:${FLOAT.split(" ").join(" peer-focus:")}
+          peer-autofill:${FLOAT.split(" ").join(" peer-autofill:")}
+          peer-[:not(:placeholder-shown)]:${FLOAT.split(" ").join(" peer-[:not(:placeholder-shown)]:")}`}
       >
         {label}
       </label>
 
-      <div
-        className={`pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 size-5 ${InputFocus ? "text-brand" : "text-muted-foreground"}`}
-      >
+      <div className="pointer-events-none absolute start-2 top-1/2 size-5 -translate-y-1/2 text-muted-foreground peer-focus:text-brand">
         {icon}
       </div>
-
-      <input
-        className={`px-10 pt-4 pb-1 rounded-xl w-full placeholder:hidden outline-0 border border-border bg-card text-card-foreground max-[620px]:py-2 ${InputFocus || hasValue ? "" : "placeholder:text-muted-foreground"}`}
-        type={inputType}
-        {...inputProps}
-        onChange={handleChange}
-      />
 
       {isPassword && (
         <button
           type="button"
-          onClick={() => setShowPassword((prev) => !prev)}
+          onClick={() => setShowPassword((p) => !p)}
           aria-label={showPassword ? "Hide password" : "Show password"}
-          className="absolute right-3 top-1/2 -translate-y-1/2 size-5 text-muted-foreground hover:text-brand cursor-pointer"
+          className="absolute end-3 top-1/2 size-5 -translate-y-1/2 cursor-pointer text-muted-foreground hover:text-brand"
         >
           {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
         </button>
