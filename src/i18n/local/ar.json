@@ -76,17 +76,17 @@
     "sessions_few": "{{count}} جلسات",
     "sessions_many": "{{count}} جلسة",
     "sessions_other": "{{count}} جلسة",
-    "loading" : "جاري تحميل الطلبات..",
-    "retry" : "اعادة تحميل الطلبات",
-    "empty" : "لا توجد طلبات موجودة"
+    "loading": "جاري تحميل الطلبات..",
+    "retry": "اعادة تحميل الطلبات",
+    "empty": "لا توجد طلبات موجودة"
   },
   "orders": {
-  "header": "طلباتي",
-  "noActiveSession": "لا يوجد جلسات نشطة",
-  "arrivedPrompt": "وصل طلبك من المطعم. اضغط للتأكيد وتحديده كواصل.",
-  "invoicePrompt": "ارفع صورة الإيصال وتكلفة التوصيل لهذا الطلب.",
-  "invoiceButton": "الفاتورة"
-},
+    "header": "طلباتي",
+    "noActiveSession": "لا يوجد جلسات نشطة",
+    "arrivedPrompt": "وصل طلبك من المطعم. اضغط للتأكيد وتحديده كواصل.",
+    "invoicePrompt": "ارفع صورة الإيصال وتكلفة التوصيل لهذا الطلب.",
+    "invoiceButton": "الفاتورة"
+  },
   "homeNavbar": {
     "sessionHost": "مضيف الجلسة",
     "roles": {
@@ -115,24 +115,24 @@
     "goToSession": "الانتقال إلى الجلسة {{number}}"
   },
   "activeSession": {
-  "active": "الجلسة نشطة",
-  "host": "المضيف",
-  "you": "أنت",
-  "joining_zero": "لا أحد منضم",
-  "joining_one": "منضم واحد",
-  "joining_two": "منضمان",
-  "joining_few": "{{count}} منضمين",
-  "joining_many": "{{count}} منضمًا",
-  "joining_other": "{{count}} منضم",
-  "confirmOrder": "تأكيد الطلب",
-  "closeOrder": "إغلاق الطلب",
-  "placeOrder": "تنفيذ الطلب",
-  "markArrived": "تحديد كوصل",
-  "makeInvoiceDraft": "إنشاء مسودة الفاتورة",
-  "endSession": "إنهاء الجلسة",
-  "reopenSession": "إعادة فتح الجلسة",
-  "cancelSession": "إلغاء الجلسة"
-},
+    "active": "الجلسة نشطة",
+    "host": "المضيف",
+    "you": "أنت",
+    "joining_zero": "لا أحد منضم",
+    "joining_one": "منضم واحد",
+    "joining_two": "منضمان",
+    "joining_few": "{{count}} منضمين",
+    "joining_many": "{{count}} منضمًا",
+    "joining_other": "{{count}} منضم",
+    "confirmOrder": "تأكيد الطلب",
+    "closeOrder": "إغلاق الطلب",
+    "placeOrder": "تنفيذ الطلب",
+    "markArrived": "تحديد كوصل",
+    "makeInvoiceDraft": "إنشاء مسودة الفاتورة",
+    "endSession": "إنهاء الجلسة",
+    "reopenSession": "إعادة فتح الجلسة",
+    "cancelSession": "إلغاء الجلسة"
+  },
   "billBreakdown": {
     "title": "تفاصيل الفاتورة",
     "itemsSubtotal": "إجمالي سعر طلباتك",
@@ -150,7 +150,15 @@
     "placedStatus": "تم إرسال الطلب للمطعم",
     "submitted": "تم الإرسال",
     "restaurant": "المطعم",
-    "arrived": "وصل"
+    "arrived": "وصل",
+    "owner": "المنظّم",
+    "participants": "المشاركون",
+    "started": "بدأت في",
+    "expectedClose": "الإغلاق المتوقع"
+  },
+  "sessionStatus": {
+    "2": "تم الطلب",
+    "3": "وصل"
   },
   "accountSettings": {
     "title": "إعدادات الحساب",
@@ -197,7 +205,6 @@
     "itemsSelected_other": "تم اختيار {{count}} عنصر",
     "totalPrice": "{{total}} جنيه"
   },
-
   "session": {
     "actions": {
       "create": "إنشاء جلسة",
@@ -217,47 +224,47 @@
     "increaseQuantity": "زيادة الكمية"
   },
   "setNewPassword": {
-  "title": "تعيين كلمة مرور جديدة",
-  "subtitle": "اختر كلمة مرور قوية لم تستخدمها من قبل.",
-  "password": "كلمة المرور الجديدة",
-  "confirmPassword": "تأكيد كلمة المرور",
-  "save": "حفظ كلمة المرور",
-  "saving": "جارٍ الحفظ...",
-  "backTo": "تذكرت كلمة المرور؟",
-  "signIn": "تسجيل الدخول",
-  "errors": {
-    "passwordMin": "كلمة المرور يجب ألا تقل عن 8 أحرف",
-    "confirmRequired": "من فضلك أكّد كلمة المرور",
-    "mismatch": "كلمتا المرور غير متطابقتين"
+    "title": "تعيين كلمة مرور جديدة",
+    "subtitle": "اختر كلمة مرور قوية لم تستخدمها من قبل.",
+    "password": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "save": "حفظ كلمة المرور",
+    "saving": "جارٍ الحفظ...",
+    "backTo": "تذكرت كلمة المرور؟",
+    "signIn": "تسجيل الدخول",
+    "errors": {
+      "passwordMin": "كلمة المرور يجب ألا تقل عن 8 أحرف",
+      "confirmRequired": "من فضلك أكّد كلمة المرور",
+      "mismatch": "كلمتا المرور غير متطابقتين"
+    }
+  },
+  "invoice": {
+    "title": "الفاتورة",
+    "item": "الصنف",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "edit": "تعديل",
+    "editItem": "تعديل {{name}}",
+    "confirmEdit": "تأكيد التعديل",
+    "itemName": "اسم الصنف",
+    "people": "الطلبات حسب الشخص",
+    "participants_zero": "لا يوجد مشاركون",
+    "participants_one": "مشارك واحد",
+    "participants_two": "مشاركان",
+    "participants_few": "{{count}} مشاركين",
+    "participants_many": "{{count}} مشاركًا",
+    "participants_other": "{{count}} مشارك",
+    "foodTotal": "إجمالي الطعام",
+    "delivery": "التوصيل",
+    "grandTotal": "الإجمالي الكلي",
+    "food": "الطعام",
+    "deliveryShare": "نصيب التوصيل",
+    "total": "الإجمالي",
+    "paid": "مدفوع",
+    "unpaid": "غير مدفوع",
+    "notMatched": "غير مطابق",
+    "approved": "تم اعتماد الفاتورة",
+    "noItems": "لا توجد أصناف",
+    "approve": "اعتماد الفاتورة"
   }
-},
-"invoice": {
-  "title": "الفاتورة",
-  "item": "الصنف",
-  "price": "السعر",
-  "quantity": "الكمية",
-  "edit": "تعديل",
-  "editItem": "تعديل {{name}}",
-  "confirmEdit": "تأكيد التعديل",
-  "itemName": "اسم الصنف",
-  "people": "الطلبات حسب الشخص",
-  "participants_zero": "لا يوجد مشاركون",
-  "participants_one": "مشارك واحد",
-  "participants_two": "مشاركان",
-  "participants_few": "{{count}} مشاركين",
-  "participants_many": "{{count}} مشاركًا",
-  "participants_other": "{{count}} مشارك",
-  "foodTotal": "إجمالي الطعام",
-  "delivery": "التوصيل",
-  "grandTotal": "الإجمالي الكلي",
-  "food": "الطعام",
-  "deliveryShare": "نصيب التوصيل",
-  "total": "الإجمالي",
-  "paid": "مدفوع",
-  "unpaid": "غير مدفوع",
-  "notMatched": "غير مطابق",
-  "approved": "تم اعتماد الفاتورة",
-  "noItems": "لا توجد أصناف",
-  "approve": "اعتماد الفاتورة"
-}
 }

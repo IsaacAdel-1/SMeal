@@ -146,7 +146,15 @@
     "placedStatus": "Placed with Restaurant",
     "submitted": "Submitted",
     "restaurant": "Restaurant",
-    "arrived": "Arrived"
+    "arrived": "Arrived",
+    "owner": "Owner",
+    "participants": "Participants",
+    "started": "Started",
+    "expectedClose": "Expected close"
+  },
+  "sessionStatus": {
+    "2": "Ordered",
+    "3": "Arrived"
   },
   "accountSettings": {
     "title": "Account Settings",
@@ -223,28 +231,28 @@
     }
   },
   "invoice": {
-  "title": "Invoice",
-  "item": "Item",
-  "price": "Price",
-  "quantity": "Quantity",
-  "edit": "Edit",
-  "editItem": "Edit {{name}}",
-  "confirmEdit": "Confirm edit",
-  "itemName": "Item name",
-  "people": "Orders by person",
-  "participants_one": "{{count}} participant",
-  "participants_other": "{{count}} participants",
-  "foodTotal": "Food total",
-  "delivery": "Delivery",
-  "grandTotal": "Grand total",
-  "food": "Food",
-  "deliveryShare": "Delivery share",
-  "total": "Total",
-  "paid": "Paid",
-  "unpaid": "Unpaid",
-  "notMatched": "Not matched",
-  "approved": "Invoice approved",
-  "noItems": "No items",
-  "approve": "Approve invoice"
-}
+    "title": "Invoice",
+    "item": "Item",
+    "price": "Price",
+    "quantity": "Quantity",
+    "edit": "Edit",
+    "editItem": "Edit {{name}}",
+    "confirmEdit": "Confirm edit",
+    "itemName": "Item name",
+    "people": "Orders by person",
+    "participants_one": "{{count}} participant",
+    "participants_other": "{{count}} participants",
+    "foodTotal": "Food total",
+    "delivery": "Delivery",
+    "grandTotal": "Grand total",
+    "food": "Food",
+    "deliveryShare": "Delivery share",
+    "total": "Total",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "notMatched": "Not matched",
+    "approved": "Invoice approved",
+    "noItems": "No items",
+    "approve": "Approve invoice"
+  }
 }
