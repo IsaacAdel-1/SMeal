@@ -1,10 +1,3 @@
-export interface ApiResponse<T> {
-  isSuccess: boolean;
-  message: string;
-  data: T;
-  errors: string[];
-}
-
 export interface PaginatedResponse<T> {
   items: T[];
   pageNumber: number;
@@ -19,3 +12,6 @@ export interface PaginationParams {
 }
 
 export const PAGE_SIZE = 10;
+
+/** Page size used when a screen needs every record (menus, history totals). */
+export const BULK_PAGE_SIZE = 50;

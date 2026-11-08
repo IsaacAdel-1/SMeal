@@ -1,10 +1,14 @@
-import Cookies from "js-cookie";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "@/modules/auth/context/AuthContext";
+import { hasSession } from "@/modules/auth/utils/session";
 
 export default function ProtectedRoute() {
-    const token = Cookies.get("token") ;
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
-    if(!token) return <Navigate to= "/login" replace />
+  if (!isAuthenticated || !hasSession()) {
+    return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />;
+  }
 
-    return <Outlet/>
+  return <Outlet />;
 }

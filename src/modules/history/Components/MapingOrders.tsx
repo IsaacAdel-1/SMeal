@@ -1,91 +1,58 @@
-import { Calendar, CheckCircle2, Receipt } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import i18n from "@/i18n";
-import useHistory from "../hooks/useHistory";
+import type { OrderSession } from "@/modules/orders/types";
+import { getOrderTotals } from "@/modules/orders/utils/orderTotals";
+import { useAuth } from "@/modules/auth/context/AuthContext";
+import SessionStatusBadge from "@/shared/session/SessionStatusBadge";
+import { formatDate, formatMoney } from "@/lib/format";
+import { sameId } from "@/lib/utils";
+import ReceiptDialog from "./ReceiptDialog";
 
-
-const isArabic = () => i18n.resolvedLanguage === "ar";
-
-export function formatDate(date: string | Date): string {
-  return new Date(date).toLocaleDateString(
-    isArabic() ? "ar-EG-u-nu-latn" : "en-GB",
-    { day: "numeric", month: "short", year: "numeric" }
-  );
-}
-
-export function formatMoney(amount: number): string {
-  return new Intl.NumberFormat(isArabic() ? "ar-EG-u-nu-latn" : "en-EG", {
-    style: "currency",
-    currency: "EGP",
-  }).format(amount);
-}
-
-export default function MapingOrders() {
+export default function MapingOrders({ orders }: { orders: OrderSession[] }) {
   const { t } = useTranslation();
-  const { data: pastOrders, isLoading, error, refetch } = useHistory();
-  const Orders = pastOrders?.data?.items ?? [];
-  if (Orders.length === 0) return <p className="text-2xl mt-6">{t("history.empty")}</p>;
-  if (isLoading) return <p>{t("history.loading")}</p>;
-  if (error) {
+  const { user } = useAuth();
+
   return (
-    <div>
-      <p className="text-destructive">{error.message}</p>
-      <button onClick={() => refetch()}>{t("history.retry")}</button>
-    </div>
-  );
-}
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
-      {pastOrders?.data?.items?.map((i: any) => {
+    <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
+      {orders.map((order) => {
+        const { total, delivery } = getOrderTotals(order);
+        const isHost = sameId(order.ownerId, user?.userId);
+
         return (
-          <div
-            key={i.orderId}
-            className="w-full rounded-3xl border border-border bg-card p-6 flex flex-col gap-5"
-          >
+          <div key={order.orderId} className="flex w-full flex-col gap-5 rounded-3xl border border-border bg-card p-6">
             <div className="flex items-start justify-between gap-3">
-              <div>
-                <h3 className="text-lg font-bold text-card-foreground">{i.restaurantName}</h3>
-                <p className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Calendar className="w-3.5 h-3.5" />
-                  {formatDate(i.startedAt)} • {t("history.host")}:{" "}
-                  {i.isHost ? t("history.you") : <bdi>{i.ownerName}</bdi>}
+              <div className="min-w-0">
+                <h3 className="truncate text-lg font-bold text-card-foreground">{order.restaurantName}</h3>
+                <p className="flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {formatDate(order.startedAt)} • {t("history.host")}:{" "}
+                  {isHost ? t("history.you") : <bdi>{order.ownerName}</bdi>}
                 </p>
               </div>
-
-              <span className="flex items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-semibold whitespace-nowrap">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-              </span>
+              <SessionStatusBadge status={order.status} />
             </div>
 
-            <div className="rounded-xl border border-border bg-surface-raised p-4 flex flex-col gap-2">
-              {i.items.map((item: any) => (
-                <div key={item.menuItemId} className="flex justify-between text-sm">
+            <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface-raised p-4">
+              {(order.items ?? []).map((item) => (
+                <div key={item.menuItemId} className="flex justify-between gap-2 text-sm">
                   <span className="text-info">
                     {item.quantity}× {item.menuItemName}
                   </span>
-                  <span className="font-semibold text-card-foreground">
-                    {formatMoney(item.unitPrice * item.quantity)}
-                  </span>
+                  <span className="font-semibold text-card-foreground">{formatMoney(item.unitPrice * item.quantity)}</span>
                 </div>
               ))}
             </div>
 
-            <div className="flex items-center justify-between border-t border-border pt-4">
+            <div className="flex items-center justify-between gap-2 border-t border-border pt-4">
               <span className="text-sm text-muted-foreground">
-                {t("history.inclDelivery", { amount: formatMoney(i.deliveryShare) })}
+                {delivery === null
+                  ? t("billBreakdown.deliveryPending")
+                  : t("history.inclDelivery", { amount: formatMoney(delivery) })}
               </span>
-              <span className="text-lg font-bold text-success">
-                {/* {formatMoney(i.total)} */}
-              </span>
+              <span className="text-lg font-bold text-success">{formatMoney(total)}</span>
             </div>
 
-            <button
-              type="button"
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface-control py-3 text-sm font-semibold text-foreground hover:bg-surface-raised transition"
-            >
-              <Receipt className="w-4 h-4" />
-              {t("history.viewReceipt")}
-            </button>
+            <ReceiptDialog sessionId={order.sessionId} restaurantName={order.restaurantName} />
           </div>
         );
       })}

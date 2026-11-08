@@ -1,14 +1,15 @@
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
+import { Link } from "react-router-dom";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import LockIcon from "../../../../assets/svgs/LockIcon";
 import MailIcon from "../../../../assets/svgs/MailIcon";
 import CustomInput from "../CustomInput";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
-import useLogin from "../../hooks/useLogin";
+import { useLogin } from "../../hooks/useAuthMutations";
+import { AUTH_LINK, AUTH_TITLE, PRIMARY_BUTTON } from "../styles";
 
 const createLoginSchema = (t: TFunction) =>
   z.object({
@@ -21,63 +22,74 @@ type LoginData = z.infer<ReturnType<typeof createLoginSchema>>;
 export default function LoginForm() {
   const { t } = useTranslation();
   const schema = useMemo(() => createLoginSchema(t), [t]);
+  const [remember, setRemember] = useState(true);
 
-  const Mail = <MailIcon />;
-  const Lock = <LockIcon />;
-
-  const { mutate, isPending , error} = useLogin();
+  const { mutate, isPending, error } = useLogin();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: LoginData) => {
-    mutate(data);
-  };
+  const onSubmit = (data: LoginData) => mutate({ ...data, remember });
 
   return (
-    <div className="mt-45">
-      <h2 className="font-bold text-[28px]">{t("login.title")}</h2>
+    <div className="py-16 md:py-24">
+      <h2 className={AUTH_TITLE}>{t("login.title")}</h2>
       <p className="text-muted-foreground">{t("login.subtitle")}</p>
 
-      <form className="flex flex-col gap-3 mt-10" onSubmit={handleSubmit(onSubmit)}>
-        <CustomInput label={t("login.email")} icon={Mail} {...register("email")} />
-        {errors.email?.message && (
-          <p className="text-sm text-destructive">{errors.email.message}</p>
-        )}
+      <form className="mt-10 flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <CustomInput
+          label={t("login.email")}
+          icon={<MailIcon />}
+          type="email"
+          autoComplete="email"
+          error={errors.email?.message}
+          {...register("email")}
+        />
 
-        <CustomInput label={t("login.password")} icon={Lock} {...register("password")} type="password"/>
-        {errors.password?.message && (
-          <p className="text-sm text-destructive">{errors.password.message}</p>
-        )}
+        <CustomInput
+          label={t("login.password")}
+          icon={<LockIcon />}
+          type="password"
+          autoComplete="current-password"
+          error={errors.password?.message}
+          {...register("password")}
+        />
 
-        <div className="flex justify-between">
-          <div className="flex gap-2 items-center">
-            <input id="remember" type="checkbox" className="accent-brand size-4" />
-            <label htmlFor="remember">{t("login.rememberMe")}</label>
-          </div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <label htmlFor="remember" className="flex cursor-pointer items-center gap-2">
+            <input
+              id="remember"
+              type="checkbox"
+              className="size-4 accent-brand"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+            />
+            {t("login.rememberMe")}
+          </label>
 
-          <Link className="text-brand text-sm font-bold cursor-pointer" to={"/forget-password"}>
+          <Link className="text-sm font-bold text-brand hover:underline" to="/forget-password">
             {t("login.forgotPassword")}
           </Link>
         </div>
 
-        <button
-          type="submit"
-          className="bg-linear-to-br rtl:bg-linear-to-bl from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl"
-          disabled={isPending}
-        >
+        <button type="submit" className={PRIMARY_BUTTON} disabled={isPending}>
           {isPending ? t("login.signingIn") : t("login.signIn")}
         </button>
 
+        {error && (
+          <p role="alert" className="text-sm whitespace-pre-line text-destructive">
+            {error.message}
+          </p>
+        )}
+
         <p>
           {t("login.noAccount")}{" "}
-          <Link className="text-brand font-semibold cursor-pointer" to={"/signup"}>
+          <Link className={AUTH_LINK} to="/signup">
             {t("login.signUp")}
           </Link>
         </p>
-        {error && <p className="text-sm text-destructive">{error.message}</p>} 
       </form>
     </div>
   );

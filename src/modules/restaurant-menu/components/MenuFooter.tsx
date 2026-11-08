@@ -1,175 +1,58 @@
-
-import {
-  CheckCheck,
-  Flag,
-  PlusCircle,
-  ShoppingBag,
-  Truck,
-  UserPlus,
-  Receipt
-} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { ActiveSessionType } from "@/modules/home/types";
-import type { SessionAction } from "../services/sessionAction.service";
+
+export type FooterButton = {
+  key: string;
+  label: string;
+  onClick: () => void;
+  icon?: LucideIcon;
+  disabled?: boolean;
+  /** Gradient classes for the primary button; secondary buttons are outlined. */
+  style?: string;
+  primary?: boolean;
+};
 
 interface MenuFooterProps {
   itemsCount: number;
   total: number;
-  session?: ActiveSessionType;
-  sessionLoading: boolean;
-  onCreateSession: () => void;
-  onJoinSession: () => void;
-  onSessionAction: (action: SessionAction) => void;
-  disabled?: boolean;
-  busy?: boolean;
+  hint?: string | null;
+  buttons: FooterButton[];
+  loading?: boolean;
 }
 
-const RED =
-  "from-brand to-brand-strong shadow-[0_8px_24px_rgba(255,59,48,0.35)]";
-const GREEN =
-  "from-success to-success shadow-[0_8px_24px_rgba(52,199,89,0.35)]";
-const BLUE =
-  "from-info to-info shadow-[0_8px_24px_rgba(10,132,255,0.35)]";
+const SECONDARY =
+  "flex items-center justify-center gap-2 rounded-2xl border border-border bg-surface-control px-4 py-3 text-sm font-semibold text-foreground hover:bg-surface-raised disabled:cursor-not-allowed disabled:opacity-50";
+const PRIMARY =
+  "flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r px-5 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:px-8 sm:py-4 rtl:bg-linear-to-l";
 
-export default function MenuFooter({
-  itemsCount,
-  total,
-  session,
-  sessionLoading,
-  onCreateSession,
-  onJoinSession,
-  onSessionAction,
-  disabled = false,
-  busy = false,
-}: MenuFooterProps) {
+export default function MenuFooter({ itemsCount, total, hint, buttons, loading = false }: MenuFooterProps) {
   const { t } = useTranslation();
 
-   const getAction = () => {
-    if (!session) {
-      return {
-        label: t("session.actions.create"),
-        icon: PlusCircle,
-        onClick: onCreateSession,
-        style: RED,
-      };
-    }
-
-    if (!session.currentUserIsOwner) {
-      if (session.status !== 0) return null;
-
-      return {
-        label: t("session.actions.join"),
-        icon: UserPlus,
-        onClick: onJoinSession,
-        style: BLUE,
-      };
-    }
-
-    if (session.status === 0) {
-      return {
-        label: t("session.actions.close"),
-        icon: CheckCheck,
-        onClick: () => onSessionAction("close"),
-        style: GREEN,
-      };
-    }
-
-    if (session.status === 1) {
-      return {
-        label: t("session.actions.placeOrder"),
-        icon: ShoppingBag,
-        onClick: () => onSessionAction("order"),
-        style: GREEN,
-      };
-    }
-
-    if (session.status === 2) {
-      return {
-        label: t("session.actions.markArrived"),
-        icon: Truck,
-        onClick: () => onSessionAction("arrive"),
-        style: GREEN,
-      };
-    }
-
-    if (session.status === 3) {
-      return {
-        label: t("session.actions.invoice"), 
-        icon: Receipt, 
-        onClick: () => onSessionAction("invoice"),
-        style: GREEN,
-      };
-    }
-
-    if (session.status === 4) {
-      return {
-        label: t("session.actions.end"), // النهاية الفعلية بعد إرسال الفاتورة
-        icon: Flag,
-        onClick: () => onSessionAction("end"),
-        style: RED,
-      };
-    }
-    return null;
-  };
-
-  const action = getAction();
-  const Icon = action?.icon;
-
-  const showCancel = session?.currentUserIsOwner;
-  const showReopen = session?.currentUserIsOwner && session.status === 1;
-
-  const sideButton =
-    "rounded-2xl border border-border bg-surface-control px-4 py-3 text-sm font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-50";
-
   return (
-    <div className="flex items-center justify-between gap-4 border-t border-border bg-surface p-4 sm:px-8 sm:py-5">
-      <div className="flex min-w-0 items-center gap-3 text-sm sm:gap-4">
-        <span className="truncate text-muted-foreground">
-          {t("footer.itemsSelected", { count: itemsCount })}
-        </span>
-
-        <span className="size-1 shrink-0 rounded-full bg-surface-control" />
-
-        <span className="shrink-0 font-bold text-foreground">
-          {t("footer.totalPrice", { total: total.toFixed(2) })}
-        </span>
+    <div className="flex flex-col gap-3 border-t border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-5">
+      <div className="min-w-0">
+        <div className="flex items-center gap-3 text-sm sm:gap-4">
+          <span className="truncate text-muted-foreground">{t("footer.itemsSelected", { count: itemsCount })}</span>
+          <span className="size-1 shrink-0 rounded-full bg-surface-control" />
+          <span className="shrink-0 font-bold text-foreground">{t("footer.totalPrice", { total: total.toFixed(2) })}</span>
+        </div>
+        {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}
       </div>
 
-      {!sessionLoading && (
-        <div className="flex items-center gap-2">
-          {showReopen && (
+      {!loading && buttons.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap">
+          {buttons.map(({ key, label, onClick, icon: Icon, disabled, style, primary }) => (
             <button
+              key={key}
               type="button"
-              disabled={busy}
-              onClick={() => onSessionAction("open")}
-              className={sideButton}
-            >
-              {t("session.actions.reopen")}
-            </button>
-          )}
-
-          {showCancel && (
-            <button
-              type="button"
-              disabled={busy}
-              onClick={() => onSessionAction("cancel")}
-              className={sideButton}
-            >
-              {t("session.actions.cancel")}
-            </button>
-          )}
-
-          {action && Icon && (
-            <button
-              type="button"
-              onClick={action.onClick}
+              onClick={onClick}
               disabled={disabled}
-              className={`flex shrink-0 items-center gap-2 rounded-2xl bg-linear-to-r px-5 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50 sm:px-8 sm:py-4 ${action.style}`}
+              className={primary ? `${PRIMARY} flex-1 sm:flex-none ${style ?? ""}` : SECONDARY}
             >
-              <Icon className="size-4" />
-              {action.label}
+              {Icon && <Icon className="size-4" />}
+              {label}
             </button>
-          )}
+          ))}
         </div>
       )}
     </div>

@@ -18,5 +18,15 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_" }],
+    },
+  },
+  {
+    // shadcn primitives and context providers export helpers next to components by design.
+    files: ["src/components/ui/**/*.tsx", "src/**/context/**/*.tsx"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
   },
 ])

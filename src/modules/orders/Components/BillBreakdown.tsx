@@ -1,49 +1,46 @@
-import CalculatorIcon from "../../../assets/svgs/CalculatorIcon";
 import { useTranslation } from "react-i18next";
+import CalculatorIcon from "../../../assets/svgs/CalculatorIcon";
 import type { OrderSession } from "../types";
+import { getOrderTotals } from "../utils/orderTotals";
 
-export default function BillBreakdown({
-  totalPrice,
-  order
-}: {
-  totalPrice: number;
-  order : OrderSession
-}) {
+export default function BillBreakdown({ order }: { order: OrderSession }) {
   const { t } = useTranslation();
-  const totalDilevery = 40;
-  const people = 3;
-  const DileveryForOne = totalDilevery / people;
-  const totalAmount = totalPrice + DileveryForOne;
+  const { subtotal, delivery, total } = getOrderTotals(order);
+  const currency = t("common.currency");
 
   return (
-    <div className="bg-card text-card-foreground rounded-2xl p-4 min-w-85 lg:w-120">
-      <header className="flex justify-between items-center mb-4 text-card-foreground">
-        <p className="flex">
-          <CalculatorIcon className="text-brand" />
+    <div className="w-full rounded-2xl border border-border bg-card p-4 text-card-foreground">
+      <header className="mb-4 flex items-center justify-between gap-2 text-card-foreground">
+        <p className="flex items-center gap-2">
+          <CalculatorIcon className="size-5 text-brand" />
           {t("billBreakdown.title")}
         </p>
-        <p className="text-muted-foreground">{order.restaurantName}</p>
+        <p className="truncate text-muted-foreground">{order.restaurantName}</p>
       </header>
 
-      <div className="flex justify-between items-center my-3">
-        <p className="text-muted-foreground">
-          {t("billBreakdown.itemsSubtotal")}
+      <div className="my-3 flex items-center justify-between">
+        <p className="text-muted-foreground">{t("billBreakdown.itemsSubtotal")}</p>
+        <p>
+          {subtotal.toFixed(2)} {currency}
         </p>
-        <p>{totalPrice.toFixed(2)}</p>
       </div>
 
-      <div className="flex justify-between items-center my-3">
+      <div className="my-3 flex items-center justify-between gap-2">
         <p className="text-muted-foreground">
-          {t("billBreakdown.deliveryShare", { people })}
+          {t("billBreakdown.deliveryShare", { count: order.participantCount })}
         </p>
-        <p>{DileveryForOne.toFixed(2)}</p>
+        <p className={delivery === null ? "text-sm text-muted-foreground" : ""}>
+          {delivery === null ? t("billBreakdown.deliveryPending") : `${delivery.toFixed(2)} ${currency}`}
+        </p>
       </div>
 
-      <div className="line h-px border border-border" />
+      <div className="h-px bg-border" />
 
-      <div className="flex justify-between items-center my-3 font-bold">
+      <div className="my-3 flex items-center justify-between font-bold">
         <p>{t("billBreakdown.totalAmount")}</p>
-        <p className="text-success">{totalAmount.toFixed(2)}</p>
+        <p className="text-success">
+          {total.toFixed(2)} {currency}
+        </p>
       </div>
     </div>
   );

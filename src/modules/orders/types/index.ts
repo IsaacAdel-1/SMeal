@@ -1,5 +1,3 @@
-import type { ApiResponse, PaginatedResponse } from "@/shared/types/pagination";
-
 export interface SessionItem {
   menuItemId: string;
   menuItemName: string;
@@ -7,6 +5,7 @@ export interface SessionItem {
   unitPrice: number;
 }
 
+/** MyOrderDto: the current user's order in a session (my-orders and my-history). */
 export interface OrderSession {
   sessionId: string;
   restaurantId: string;
@@ -17,60 +16,22 @@ export interface OrderSession {
   status: number;
   startedAt: string;
   expectedClosedAt: string;
-  deliveryShare: number;
+  /** Known once the host uploads the receipt with the delivery cost. */
+  deliveryShare: number | null;
   participantCount: number;
   orderId: string;
-  items: SessionItem[];
+  items: SessionItem[] | null;
 }
 
 export type MenuItem = SessionItem;
-export type SessionsResponse = ApiResponse<PaginatedResponse<OrderSession>>;
-export type ApiEnvelope<T> = ApiResponse<T>;
-
-
-type Item = {
-  orderItemId: string;
-  name: string;
-  quantity: number;
-  unitPrice: number;
-  total: number;
-  isMatched: boolean;
-};
-
-export type Participant = {
-  orderId: string;
-  participantId: string;
-  participantName: string;
-  foodAmount: number;
-  deliveryShare: number;
-  totalAmount: number;
-  isPaid: boolean;
-  items: Item[];
-};
-
-export type Props = {
-  sessionId : string; 
-  deliveryCost: number;
-  participants: Participant[];
-  isApproved?: boolean;
-};
-
-
-
-export type SessionItemProps = {
-  menuItemId: string;
-  menuItemName: string;
-  quantity: number;
-  unitPrice: number;
-};
 
 export type SessionParticipant = {
   participantId: string;
   participantName: string;
   paymentStatus: number;
-  deliveryShare: number;
+  deliveryShare: number | null;
   orderId: string;
-  items: SessionItemProps[];
+  items: SessionItem[] | null;
 };
 
 export type SessionDetails = {
@@ -86,5 +47,35 @@ export type SessionDetails = {
   participantCount: number;
   currentUserIsOwner: boolean;
   invoiceUrl: string | null;
-  participants: SessionParticipant[];
+  participants: SessionParticipant[] | null;
+};
+
+export type InvoiceItem = {
+  /** Null for receipt lines that could not be matched to an order item. */
+  orderItemId: string | null;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+  isMatched: boolean;
+};
+
+export type InvoiceParticipant = {
+  orderId: string;
+  participantId: string;
+  participantName: string;
+  foodAmount: number;
+  deliveryShare: number;
+  totalAmount: number;
+  isPaid: boolean;
+  items: InvoiceItem[] | null;
+};
+
+export type InvoiceDraft = {
+  foodTotal: number;
+  deliveryCost: number;
+  grandTotal: number;
+  participantsCount: number;
+  isApproved: boolean;
+  participants: InvoiceParticipant[] | null;
 };

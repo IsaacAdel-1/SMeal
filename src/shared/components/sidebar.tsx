@@ -1,90 +1,77 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LogOut } from "lucide-react";
 import Logo from "../../assets/images/sm_logo.png";
 import { sidebarItems } from "../../constants/sidebarItems";
-import { LogOut } from "lucide-react";
 import { useAuth } from "@/modules/auth/context/AuthContext";
-import Cookies from "js-cookie";
+import { getInitials } from "@/modules/auth/utils/user";
 
-export type User = {
-  id: number;
-  fullName: string;
-  role: "customer" | "Organizer" | "chef";
-};
-
-export const mockUser: User = {
-  id: 1,
-  fullName: "Ahmed Hassan",
-  role: "Organizer",
-};
-
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useTranslation();
-  const { logout } = useAuth();
-  const raw = Cookies.get("user");
-  const user = raw ? JSON.parse(raw) : null;
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const initialLetters = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase();
-
   return (
-    <div className="bg-surface w-75 min-h-screen p-4 flex flex-col justify-between sticky top-0 bottom-0">
+    <div className="flex h-full w-72 flex-col justify-between overflow-y-auto border-e border-border bg-surface p-4 lg:w-75">
       <div>
         <header className="flex gap-2">
-          <img src={Logo} alt="sMeal" className="w-12 h-12" />
+          <img src={Logo} alt="" className="h-12 w-12" />
           <div>
-            <p className="text-foreground text-xl font-semibold">sMeal</p>
-            <p className="text-muted-foreground text-[12px]">
-              {t("sidebar.workspace")}
-            </p>
+            <p className="text-xl font-semibold text-foreground">sMeal</p>
+            <p className="text-[12px] text-muted-foreground">{t("sidebar.workspace")}</p>
           </div>
         </header>
 
-        <div className="w-full bg-surface-raised h-px my-7" />
+        <div className="my-7 h-px w-full bg-surface-raised" />
 
-        <ul className="flex flex-col gap-2">
-          {sidebarItems.map((item) => (
-            <li key={item.key}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  `flex items-center gap-2 text-muted-foreground font-semibold p-2 rounded-2xl ${
-                    isActive
-                      ? "bg-linear-to-r rtl:bg-linear-to-l from-brand to-brand-strong text-white"
-                      : "hover:bg-surface-raised hover:text-foreground"
-                  }`
-                }
-              >
-                <item.icon size={27} />
-                <p>{t(`sidebar.items.${item.key}`)}</p>
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <nav>
+          <ul className="flex flex-col gap-2">
+            {sidebarItems.map((item) => (
+              <li key={item.key}>
+                <NavLink
+                  to={item.path}
+                  onClick={onNavigate}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 rounded-2xl p-2 font-semibold ${
+                      isActive
+                        ? "bg-linear-to-r from-brand to-brand-strong text-white rtl:bg-linear-to-l"
+                        : "text-muted-foreground hover:bg-surface-raised hover:text-foreground"
+                    }`
+                  }
+                >
+                  <item.icon size={27} />
+                  <span>{t(`sidebar.items.${item.key}`)}</span>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
 
-      <div className="flex text-foreground gap-2 items-center">
-        <p className="bg-brand w-12 h-12 flex items-center justify-center text-2xl font-semibold rounded-2xl text-white">
-          {initialLetters}
+      <div className="mt-6 flex items-center gap-2 text-foreground">
+        <p className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand text-2xl font-semibold text-white">
+          {getInitials(user)}
         </p>
 
-        <div>
-          <p className="font-semibold">
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-semibold">
             {user?.firstName} {user?.lastName}
           </p>
-          <p className="text-info text-[12px]">
-            {t(`sidebar.roles.${mockUser.role}`)}
-          </p>
+          <p className="truncate text-[12px] text-info">{user?.email}</p>
         </div>
 
-        <LogOut
+        <button
+          type="button"
           aria-label={t("sidebar.logout")}
-          className="size-6 text-brand cursor-pointer ms-8 rtl:-scale-x-100"
+          title={t("sidebar.logout")}
+          className="rounded-lg p-1 text-brand hover:bg-brand/10"
           onClick={() => {
             logout();
             navigate("/login", { replace: true });
           }}
-        />
+        >
+          <LogOut className="size-6 rtl:-scale-x-100" />
+        </button>
       </div>
     </div>
   );

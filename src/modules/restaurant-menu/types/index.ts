@@ -1,9 +1,10 @@
 export interface MenuItemCardProps {
   name: string;
-  description: string;
+  description: string | null;
   price: number;
   imageUrl?: string | null;
   quantity: number;
+  disabled?: boolean;
   onIncrease: () => void;
   onDecrease: () => void;
 }
@@ -11,7 +12,7 @@ export interface MenuItemCardProps {
 export interface MenuItem {
   id: string;
   name: string;
-  description: string;
+  description: string | null;
   price: number;
   imageUrl: string | null;
 }
@@ -21,29 +22,19 @@ export interface OrderItem {
   quantity: number;
 }
 
-export interface RestaurantSession {
+/** GET /api/restaurants/{id}: the current user's order in this restaurant's session is included. */
+export interface RestaurantDetails {
   id: string;
   name: string;
-  description: string;
-  phoneNumber: string;
-  address: string;
-  logoUrl: string;
+  description: string | null;
+  phoneNumber: string | null;
+  address: string | null;
+  logoUrl: string | null;
   maximumDeliveryDistanceKm: number;
-  sessionId: string;
-  orderId: string;
-  currentUserIsOwner: boolean;
-  orderItems: OrderItem[];
+  sessionId: string | null;
+  orderId: string | null;
+  currentUserIsOwner: boolean | null;
+  orderItems: OrderItem[] | null;
 }
 
-export interface RestaurantResponse {
-  isSuccess: boolean;
-  message: string;
-  data: RestaurantSession;
-  errors: string[];
-}
-
-
-export interface items {
-    menuItemId : string ;
-    quantity : number 
-}
+export type Quantities = Record<string, number>;

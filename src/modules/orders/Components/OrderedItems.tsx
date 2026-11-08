@@ -1,58 +1,45 @@
-
+import { useTranslation } from "react-i18next";
 import BagIcon from "../../../assets/svgs/BagIcon";
 import type { MenuItem } from "../types";
-import { useTranslation } from "react-i18next";
 
-export default function OrderedItems({
-  orderDetails,
-}: {
-  orderDetails: MenuItem[];
-}) {
-const { t } = useTranslation();
+export default function OrderedItems({ orderDetails, editable }: { orderDetails: MenuItem[]; editable: boolean }) {
+  const { t } = useTranslation();
+
   return (
-    // <div className="bg-card text-card-foreground max-w-120 rounded-2xl mt-8  border border-border p-4">
-    <div className="bg-card text-card-foreground rounded-2xl border border-border p-4">
-      <header className="flex items-center justify-between">
-        <p className="text-xl flex text-card-foreground items-center gap-2">
-          <BagIcon className="text-brand size-4" />
+    <div className="w-full rounded-2xl border border-border bg-card p-4 text-card-foreground">
+      <header className="flex flex-wrap items-center justify-between gap-2">
+        <p className="flex items-center gap-2 text-xl text-card-foreground">
+          <BagIcon className="size-4 text-brand" />
           {t("orderedItems.title")}
         </p>
-        <p className="text-muted-foreground">
-          {t("orderedItems.status")}
+        <p className="text-sm text-muted-foreground">
+          {editable ? t("orderedItems.editable") : t("orderedItems.status")}
         </p>
       </header>
 
-      <ul className="flex flex-col gap-2 mt-4">
-        {orderDetails?.map((item) => {
-          const price = item.unitPrice * item.quantity;
-
-          return (
+      {orderDetails.length === 0 ? (
+        <p className="mt-4 text-muted-foreground">{t("orderedItems.empty")}</p>
+      ) : (
+        <ul className="mt-4 flex flex-col gap-2">
+          {orderDetails.map((item) => (
             <li
-              key={item.menuItemName}
-              className="bg-surface-raised border border-border p-2 rounded-2xl flex justify-between "
+              key={item.menuItemId}
+              className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-surface-raised p-3"
             >
-              <div>
-                <p className="text-card-foreground  ">
-                  {item.menuItemName}
-                </p>
-
-                <p className="text-muted-foreground text-[14px]">
-                  {t("orderedItems.quantityAndUnitPrice", {
-                    quantity: item.quantity,
-                    unitPrice: item.unitPrice,
-                  })}
+              <div className="min-w-0">
+                <p className="truncate text-card-foreground">{item.menuItemName}</p>
+                <p className="text-[14px] text-muted-foreground">
+                  {t("orderedItems.quantityAndUnitPrice", { quantity: item.quantity, unitPrice: item.unitPrice })}
                 </p>
               </div>
 
-              <p className="text-xl font-semibold text-card-foreground">
-                {t("orderedItems.price", {
-                  price: price.toFixed(2),
-                })}
+              <p className="shrink-0 text-lg font-semibold text-card-foreground">
+                {t("orderedItems.price", { price: (item.unitPrice * item.quantity).toFixed(2) })}
               </p>
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

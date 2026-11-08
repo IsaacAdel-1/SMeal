@@ -21,7 +21,7 @@ export default function AuthBranding() {
   ];
 
   return (
-    <div className="bg-surface text-foreground max-w-130 px-12.5 py-8 relative overflow-hidden max-h-full rounded-s-2xl border-e border-border">
+    <div className="relative w-full overflow-hidden border-e border-border bg-surface px-12.5 py-8 text-foreground">
       <header className="mb-15">
         <img src={photo} alt="sMeals" className="w-12 h-12" />
         <h2 dir="ltr" className="font-extrabold text-2xl text-brand text-start">
@@ -46,7 +46,7 @@ export default function AuthBranding() {
         {t("authBranding.copyright")}
       </div>
 
-      <div className="absolute -bottom-10 -inset-s-12 w-50 h-50 z-1 bg-surface-raised rounded-full p-10">
+      <div aria-hidden="true" className="absolute -bottom-10 -inset-s-12 w-50 h-50 z-1 bg-surface-raised rounded-full p-10">
         <BowlIcon />
       </div>
     </div>

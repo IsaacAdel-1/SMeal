@@ -1,34 +1,37 @@
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { TFunction } from "i18next";
 import z from "zod";
-import { Lock, ShieldCheck, KeyRound } from "lucide-react";
+import { toast } from "sonner";
+import { KeyRound, Lock, ShieldCheck } from "lucide-react";
 import CustomInput from "@/modules/auth/Components/CustomInput";
-import useChangePassword from "../hooks/useChangePassword";
+import { PRIMARY_BUTTON } from "@/modules/auth/Components/styles";
+import { changePassword } from "../Services/profile.service";
 
 const createSchema = (t: TFunction) =>
   z
     .object({
-      currentPassword: z.string().min(8, t("changePassword.errors.passwordMin")),
+      currentPassword: z.string().min(1, t("changePassword.errors.currentRequired")),
       newPassword: z.string().min(8, t("changePassword.errors.passwordMin")),
-      confirmNewPassword: z.string().min(8, t("changePassword.errors.passwordMin")),
+      confirmNewPassword: z.string().min(1, t("changePassword.errors.confirmRequired")),
     })
     .refine((data) => data.newPassword === data.confirmNewPassword, {
       message: t("changePassword.errors.passwordsMismatch"),
       path: ["confirmNewPassword"],
+    })
+    .refine((data) => data.newPassword !== data.currentPassword, {
+      message: t("changePassword.errors.samePassword"),
+      path: ["newPassword"],
     });
 
 type ChangePasswordForm = z.infer<ReturnType<typeof createSchema>>;
 
-export default function ChangePassword() {
+export default function ChangePassword({ onDone }: { onDone?: () => void }) {
   const { t } = useTranslation();
   const schema = useMemo(() => createSchema(t), [t]);
-
-  const LockIcon = <Lock />;
-  const KeyRoundIcon = <KeyRound />;
-  const ShieldCheckIcon = <ShieldCheck />;
 
   const {
     register,
@@ -37,69 +40,57 @@ export default function ChangePassword() {
     formState: { errors },
   } = useForm<ChangePasswordForm>({ resolver: zodResolver(schema) });
 
-  const { mutate: changePassword, isPending, isSuccess, error } = useChangePassword();
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: changePassword,
+    meta: { inlineError: true },
+    onSuccess: () => {
+      toast.success(t("changePassword.success"));
+      reset();
+      onDone?.();
+    },
+  });
 
-  const onSubmit = ({ currentPassword, newPassword }: ChangePasswordForm) => {
-    changePassword(
-      { currentPassword, newPassword },
-      { onSuccess: () => reset() }
-    );
-  };
+  const onSubmit = ({ currentPassword, newPassword }: ChangePasswordForm) => mutate({ currentPassword, newPassword });
 
   return (
-    <div>
-      <p className="text-xl font-semibold">{t("changePassword.description")}</p>
+    <div className="w-full">
+      <p className="text-muted-foreground">{t("changePassword.description")}</p>
 
-      <form className="flex flex-col gap-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <CustomInput
-            label={t("changePassword.currentPassword")}
-            type="password"
-            icon={LockIcon}
-            {...register("currentPassword")}
-          />
-          {errors.currentPassword && (
-            <p className="text-red-500 text-sm mt-2">{errors.currentPassword.message}</p>
-          )}
-        </div>
+      <form className="mt-4 flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+        <CustomInput
+          label={t("changePassword.currentPassword")}
+          type="password"
+          autoComplete="current-password"
+          icon={<Lock />}
+          error={errors.currentPassword?.message}
+          {...register("currentPassword")}
+        />
+        <CustomInput
+          label={t("changePassword.newPassword")}
+          type="password"
+          autoComplete="new-password"
+          icon={<ShieldCheck />}
+          error={errors.newPassword?.message}
+          {...register("newPassword")}
+        />
+        <CustomInput
+          label={t("changePassword.confirmNewPassword")}
+          type="password"
+          autoComplete="new-password"
+          icon={<KeyRound />}
+          error={errors.confirmNewPassword?.message}
+          {...register("confirmNewPassword")}
+        />
 
-        <div>
-          <CustomInput
-            label={t("changePassword.newPassword")}
-            type="password"
-            icon={ShieldCheckIcon}
-            {...register("newPassword")}
-          />
-          {errors.newPassword && (
-            <p className="text-red-500 text-sm mt-2">{errors.newPassword.message}</p>
-          )}
-        </div>
-
-        <div>
-          <CustomInput
-            label={t("changePassword.confirmNewPassword")}
-            type="password"
-            icon={KeyRoundIcon}
-            {...register("confirmNewPassword")}
-          />
-          {errors.confirmNewPassword && (
-            <p className="text-red-500 text-sm mt-2">{errors.confirmNewPassword.message}</p>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          disabled={isPending}
-          className="bg-linear-to-br rtl:bg-linear-to-bl from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl mt-2 disabled:opacity-60"
-        >
+        <button type="submit" disabled={isPending} className={`${PRIMARY_BUTTON} mt-2`}>
           {isPending ? t("changePassword.submitting") : t("changePassword.submit")}
         </button>
 
-        {isSuccess && (
-          <p className="text-green-600 text-sm">{t("changePassword.success")}</p>
+        {error && (
+          <p role="alert" className="text-sm whitespace-pre-line text-destructive">
+            {error.message}
+          </p>
         )}
-
-        {error && <p className="text-red-500 text-sm">{error.message}</p>}
       </form>
     </div>
   );

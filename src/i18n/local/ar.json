@@ -2,16 +2,25 @@
   "sidebar": {
     "workspace": "مساحة العمل",
     "logout": "تسجيل الخروج",
-    "roles": {
-      "customer": "عميل",
-      "Organizer": "منظّم",
-      "chef": "شيف"
-    },
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
     "items": {
       "home": "الصفحة الرئيسية",
       "orders": "طلباتي",
       "history": "السجل",
       "settings": "إعدادات الحساب"
+    }
+  },
+  "orders": {
+    "header": "طلباتي",
+    "noActiveSession": "لا يوجد جلسات نشطة",
+    "prompts": {
+      "open": "الجلسة مفتوحة. أغلقها بعد ما الكل يضيف طلبه.",
+      "closed": "الطلبات اتقفلت. ابعت الطلب للمطعم أو افتح الجلسة تاني.",
+      "ordered": "تم إرسال الطلب للمطعم. أكّد الوصول لما الأكل يوصل.",
+      "arrived": "الأكل وصل. ارفع صورة الإيصال وتكلفة التوصيل.",
+      "invoiceReady": "راجع مسودة الفاتورة واعتمدها وبعدين أنهِ الجلسة.",
+      "participantOpen": "الجلسة لسه مفتوحة، تقدر تعدّل طلبك لحد ما المضيف يقفلها."
     }
   },
   "login": {
@@ -30,14 +39,39 @@
       "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف"
     }
   },
+  "signup": {
+    "title": "إنشاء حساب",
+    "subtitle": "انضم إلى sMeals واطلب أشهى الأطباق الطازجة",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الموبايل",
+    "password": "كلمة المرور",
+    "acceptTerms": "أوافق على الشروط والأحكام",
+    "submit": "إنشاء حساب",
+    "submitting": "جارٍ إنشاء الحساب...",
+    "haveAccount": "لديك حساب بالفعل؟",
+    "signIn": "تسجيل الدخول",
+    "errors": {
+      "firstNameMin": "الاسم الأول يجب ألا يقل عن حرفين",
+      "lastNameMin": "اسم العائلة يجب ألا يقل عن حرفين",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+      "phoneInvalid": "أدخل رقم موبايل مصري صحيح (01xxxxxxxxx)",
+      "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+      "termsRequired": "يجب الموافقة على الشروط والأحكام"
+    }
+  },
   "otp": {
     "title": "رمز الأمان",
     "subtitle": "أدخل الرمز المرسل إلى",
     "digit": "الرقم {{number}}",
     "verify": "تأكيد الحساب",
-    "sending": "جارٍ الإرسال...",
+    "sending": "جارٍ التأكيد...",
     "noCode": "لم يصلك الرمز؟",
     "resend": "إعادة الإرسال",
+    "resending": "جارٍ الإرسال...",
+    "resent": "تم إرسال رمز جديد إلى بريدك الإلكتروني.",
+    "success": "تم تأكيد بريدك الإلكتروني. يمكنك تسجيل الدخول الآن.",
     "errors": {
       "generic": "حدث خطأ ما"
     }
@@ -48,6 +82,9 @@
     "email": "البريد الإلكتروني المسجّل",
     "submit": "إرسال رابط الاسترجاع",
     "sending": "جارٍ الإرسال...",
+    "success": "لو الحساب موجود، تم إرسال رابط الاسترجاع إلى",
+    "backTo": "تذكرت كلمة المرور؟",
+    "signIn": "تسجيل الدخول",
     "errors": {
       "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح"
     }
@@ -68,6 +105,9 @@
     "you": "أنت",
     "inclDelivery": "شامل {{amount}} رسوم توصيل",
     "viewReceipt": "عرض صورة الإيصال الموثّق",
+    "receiptTitle": "إيصال {{name}}",
+    "openReceipt": "فتح في تبويب جديد",
+    "noReceipt": "لم يتم رفع إيصال لهذه الجلسة.",
     "totalPastSpent": "إجمالي المصروفات السابقة",
     "completedOrders": "الطلبات المكتملة",
     "sessions_zero": "لا توجد جلسات",
@@ -76,78 +116,77 @@
     "sessions_few": "{{count}} جلسات",
     "sessions_many": "{{count}} جلسة",
     "sessions_other": "{{count}} جلسة",
-    "loading": "جاري تحميل الطلبات..",
-    "retry": "اعادة تحميل الطلبات",
-    "empty": "لا توجد طلبات موجودة"
-  },
-  "orders": {
-    "header": "طلباتي",
-    "noActiveSession": "لا يوجد جلسات نشطة",
-    "arrivedPrompt": "وصل طلبك من المطعم. اضغط للتأكيد وتحديده كواصل.",
-    "invoicePrompt": "ارفع صورة الإيصال وتكلفة التوصيل لهذا الطلب.",
-    "invoiceButton": "الفاتورة"
+    "loading": "جارٍ تحميل الطلبات...",
+    "retry": "إعادة المحاولة",
+    "empty": "لا توجد طلبات سابقة"
   },
   "homeNavbar": {
-    "sessionHost": "مضيف الجلسة",
-    "roles": {
-      "customer": "عميل",
-      "admin": "مدير",
-      "Organizer": "منظّم"
-    }
+    "greeting": "أهلًا، {{name}}",
+    "sessionHost": "مضيف جلسة"
   },
   "availableRestaurants": {
     "title": "المطاعم المتاحة",
     "loading": "جارٍ تحميل المطاعم...",
-    "empty": "لا توجد مطاعم متاحة"
+    "empty": "لا توجد مطاعم متاحة",
+    "noMatches": "لا توجد مطاعم مطابقة لبحثك"
   },
   "restaurantCard": {
     "viewDetails": "عرض التفاصيل والقائمة",
-    "distance": "{{distance}} كم"
+    "distance": "يوصّل حتى {{distance}} كم"
   },
   "exploreCuisines": {
     "title": "استكشف المطابخ",
     "searchPlaceholder": "ابحث عن مطاعم أو مطابخ",
+    "clearSearch": "مسح البحث",
     "loading": "جارٍ التحميل...",
     "all": "الكل"
   },
   "activeGroupSessions": {
     "title": "الجلسات الجماعية النشطة",
-    "goToSession": "الانتقال إلى الجلسة {{number}}"
+    "goToSession": "الانتقال إلى الجلسة {{number}}",
+    "empty": "لا توجد جلسات نشطة حاليًا. اختر مطعمًا بالأسفل لبدء جلسة."
   },
   "activeSession": {
     "active": "الجلسة نشطة",
     "host": "المضيف",
     "you": "أنت",
+    "timeLeft": "الوقت المتبقي",
     "joining_zero": "لا أحد منضم",
     "joining_one": "منضم واحد",
     "joining_two": "منضمان",
     "joining_few": "{{count}} منضمين",
     "joining_many": "{{count}} منضمًا",
-    "joining_other": "{{count}} منضم",
-    "confirmOrder": "تأكيد الطلب",
-    "closeOrder": "إغلاق الطلب",
-    "placeOrder": "تنفيذ الطلب",
-    "markArrived": "تحديد كوصل",
-    "makeInvoiceDraft": "إنشاء مسودة الفاتورة",
-    "endSession": "إنهاء الجلسة",
-    "reopenSession": "إعادة فتح الجلسة",
-    "cancelSession": "إلغاء الجلسة"
+    "joining_other": "{{count}} منضم"
+  },
+  "sessionBanner": {
+    "yourSession": "أنت مضيف هذه الجلسة الجماعية",
+    "hostedBy": "جلسة جماعية يستضيفها {{name}}",
+    "closesAt": "تُغلق {{time}}",
+    "joinHint": "اختر طلباتك بالأسفل ثم اضغط «الانضمام إلى الجلسة النشطة».",
+    "youJoined": "أنت منضم"
   },
   "billBreakdown": {
     "title": "تفاصيل الفاتورة",
     "itemsSubtotal": "إجمالي سعر طلباتك",
-    "deliveryShare": "نصيب التوصيل ({{people}} أشخاص)",
+    "deliveryShare_zero": "نصيب التوصيل",
+    "deliveryShare_one": "نصيب التوصيل (شخص واحد)",
+    "deliveryShare_two": "نصيب التوصيل (شخصان)",
+    "deliveryShare_few": "نصيب التوصيل ({{count}} أشخاص)",
+    "deliveryShare_many": "نصيب التوصيل ({{count}} شخصًا)",
+    "deliveryShare_other": "نصيب التوصيل ({{count}} شخص)",
+    "deliveryPending": "يُحدد بعد رفع الإيصال",
     "totalAmount": "الإجمالي"
   },
   "orderedItems": {
     "title": "الطلبات الخاصة بك",
     "status": "تم التأكيد والإرسال",
+    "editable": "متاح للتعديل",
+    "empty": "لا توجد أصناف",
     "quantityAndUnitPrice": "الكمية: {{quantity}} - {{unitPrice}} جنيه للقطعة",
     "price": "{{price}} جنيه"
   },
   "orderTracking": {
     "title": "متابعة الطلب مباشرة",
-    "placedStatus": "تم إرسال الطلب للمطعم",
     "submitted": "تم الإرسال",
     "restaurant": "المطعم",
     "arrived": "وصل",
@@ -157,35 +196,61 @@
     "expectedClose": "الإغلاق المتوقع"
   },
   "sessionStatus": {
+    "0": "مفتوحة",
+    "1": "مغلقة",
     "2": "تم الطلب",
-    "3": "وصل"
+    "3": "وصل",
+    "4": "الفاتورة جاهزة",
+    "5": "مكتملة"
+  },
+  "profile": {
+    "header": "الملف الشخصي وإعدادات الحساب"
   },
   "accountSettings": {
     "title": "إعدادات الحساب",
     "items": {
-      "editPersonalDetails": "تعديل البيانات الشخصية",
-      "changePassword": "تغيير كلمة المرور",
-      "securityPrivacy": "الأمان والخصوصية"
+      "personalDetails": "البيانات الشخصية",
+      "changePassword": "تغيير كلمة المرور"
     }
+  },
+  "personalDetails": {
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الموبايل",
+    "readOnlyNote": "لا يمكن تعديل البيانات الشخصية من التطبيق حاليًا."
   },
   "changePassword": {
     "description": "أدخل كلمة المرور الحالية واختر كلمة مرور جديدة",
     "currentPassword": "كلمة المرور الحالية",
     "newPassword": "كلمة المرور الجديدة",
-    "confirmNewPassword": "تأكيد كلمة المرور الجديدة"
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "submit": "تحديث كلمة المرور",
+    "submitting": "جارٍ التحديث...",
+    "success": "تم تغيير كلمة المرور.",
+    "errors": {
+      "currentRequired": "أدخل كلمة المرور الحالية",
+      "passwordMin": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+      "confirmRequired": "من فضلك أكّد كلمة المرور الجديدة",
+      "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+      "samePassword": "كلمة المرور الجديدة يجب أن تختلف عن الحالية"
+    }
   },
   "common": {
-    "cancel": "إلغاء",
-    "saveChanges": "حفظ التغييرات",
     "currency": "جنيه",
     "loading": "جارٍ التحميل...",
-    "restaurantNotFound": "المطعم غير موجود"
-  },
-  "editPersonalDetails": {
-    "profilePicture": "الصورة الشخصية",
-    "changeProfilePicture": "تغيير الصورة الشخصية",
-    "firstName": "الاسم الأول",
-    "lastName": "اسم العائلة"
+    "restaurantNotFound": "المطعم غير موجود",
+    "backHome": "العودة للرئيسية",
+    "genericError": "حدث خطأ ما. حاول مرة أخرى.",
+    "networkError": "تعذّر الوصول إلى الخادم. تحقق من الاتصال وحاول مرة أخرى.",
+    "sessionExpired": "انتهت جلسة الدخول. سجّل الدخول مرة أخرى.",
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
+    "showing": "عرض {{from}}–{{to}} من {{total}}",
+    "pagination": "التنقل بين الصفحات",
+    "previousPage": "الصفحة السابقة",
+    "nextPage": "الصفحة التالية",
+    "page": "صفحة {{page}}"
   },
   "logout": {
     "button": "تسجيل الخروج"
@@ -194,7 +259,7 @@
     "title": "التفضيلات والمظهر",
     "darkMode": "الوضع الداكن",
     "appLanguage": "لغة التطبيق",
-    "languageValue": "الإنجليزية (الولايات المتحدة)"
+    "switchLanguage": "تغيير اللغة"
   },
   "footer": {
     "itemsSelected_zero": "لم يتم اختيار أي عناصر",
@@ -203,25 +268,62 @@
     "itemsSelected_few": "تم اختيار {{count}} عناصر",
     "itemsSelected_many": "تم اختيار {{count}} عنصرًا",
     "itemsSelected_other": "تم اختيار {{count}} عنصر",
-    "totalPrice": "{{total}} جنيه"
+    "totalPrice": "{{total}} جنيه",
+    "hints": {
+      "pickToCreate": "اختر صنفًا واحدًا على الأقل لبدء جلسة جماعية.",
+      "pickToJoin": "اختر صنفًا واحدًا على الأقل للانضمام لهذه الجلسة.",
+      "readyToJoin": "اضغط «الانضمام إلى الجلسة النشطة» لإرسال طلبك.",
+      "joined": "أنت منضم لهذه الجلسة. غيّر الكميات واحفظ لتحديث طلبك.",
+      "unsaved": "لديك تعديلات غير محفوظة على طلبك.",
+      "emptyOrder": "لا يمكن أن يكون طلبك فارغًا. غادر الجلسة لحذفه.",
+      "ownerNeedsItems": "لا يمكن أن يكون طلبك فارغًا.",
+      "locked": "الطلبات مقفلة في هذه الجلسة.",
+      "notAccepting": "هذه الجلسة لم تعد تستقبل طلبات جديدة."
+    }
+  },
+  "menu": {
+    "loading": "جارٍ تحميل القائمة...",
+    "empty": "لا توجد أصناف في قائمة هذا المطعم بعد."
   },
   "session": {
     "actions": {
       "create": "إنشاء جلسة",
       "join": "الانضمام إلى الجلسة النشطة",
+      "update": "تحديث طلبي",
+      "leave": "مغادرة الجلسة",
+      "viewOrder": "عرض طلبي",
+      "editOrder": "تعديل طلبي",
       "close": "إغلاق الجلسة",
       "placeOrder": "إرسال الطلب",
       "markArrived": "تأكيد الوصول",
+      "invoice": "رفع الفاتورة",
+      "reviewInvoice": "مراجعة الفاتورة",
       "end": "إنهاء الجلسة",
       "reopen": "إعادة فتح الجلسة",
       "cancel": "إلغاء الجلسة"
     },
-    "menuHeader": "قائمة {{name}}",
-    "confirmAction": "هل أنت متأكد؟"
+    "messages": {
+      "created": "تم إنشاء الجلسة الجماعية. شاركها مع فريقك!",
+      "joined": "انضممت إلى الجلسة وتمت إضافة طلبك.",
+      "updated": "تم تحديث طلبك.",
+      "left": "غادرت الجلسة.",
+      "close": "تم إغلاق الجلسة، والطلبات مقفلة الآن.",
+      "open": "تمت إعادة فتح الجلسة.",
+      "order": "تم إرسال الطلب للمطعم.",
+      "arrive": "تم تأكيد الوصول.",
+      "end": "تم إنهاء الجلسة.",
+      "cancel": "تم إلغاء الجلسة."
+    },
+    "confirm": {
+      "cancel": "إلغاء هذه الجلسة؟ سيتم حذف طلبات الجميع.",
+      "end": "إنهاء هذه الجلسة؟ لا يمكن التراجع عن ذلك.",
+      "leave": "مغادرة هذه الجلسة؟ سيتم حذف طلبك."
+    },
+    "menuHeader": "قائمة {{name}}"
   },
   "itemCard": {
-    "decreaseQuantity": "تقليل الكمية",
-    "increaseQuantity": "زيادة الكمية"
+    "decreaseQuantity": "تقليل كمية {{name}}",
+    "increaseQuantity": "زيادة كمية {{name}}"
   },
   "setNewPassword": {
     "title": "تعيين كلمة مرور جديدة",
@@ -230,22 +332,30 @@
     "confirmPassword": "تأكيد كلمة المرور",
     "save": "حفظ كلمة المرور",
     "saving": "جارٍ الحفظ...",
+    "success": "تمت إعادة تعيين كلمة المرور. سجّل الدخول بالكلمة الجديدة.",
     "backTo": "تذكرت كلمة المرور؟",
     "signIn": "تسجيل الدخول",
+    "requestNewLink": "طلب رابط جديد",
     "errors": {
       "passwordMin": "كلمة المرور يجب ألا تقل عن 8 أحرف",
       "confirmRequired": "من فضلك أكّد كلمة المرور",
-      "mismatch": "كلمتا المرور غير متطابقتين"
+      "mismatch": "كلمتا المرور غير متطابقتين",
+      "invalidLink": "رابط إعادة التعيين غير صالح أو غير مكتمل."
     }
   },
   "invoice": {
     "title": "الفاتورة",
+    "headerFor": "فاتورة {{name}}",
+    "backToOrders": "العودة إلى طلباتي",
+    "draftTitle": "مسودة الفاتورة",
     "item": "الصنف",
-    "price": "السعر",
     "quantity": "الكمية",
-    "edit": "تعديل",
+    "unitPrice": "سعر الوحدة",
+    "total": "الإجمالي",
     "editItem": "تعديل {{name}}",
-    "confirmEdit": "تأكيد التعديل",
+    "confirmEdit": "إنهاء التعديل",
+    "remove": "حذف {{name}}",
+    "addItem": "إضافة صنف",
     "itemName": "اسم الصنف",
     "people": "الطلبات حسب الشخص",
     "participants_zero": "لا يوجد مشاركون",
@@ -256,15 +366,39 @@
     "participants_other": "{{count}} مشارك",
     "foodTotal": "إجمالي الطعام",
     "delivery": "التوصيل",
-    "grandTotal": "الإجمالي الكلي",
     "food": "الطعام",
     "deliveryShare": "نصيب التوصيل",
-    "total": "الإجمالي",
     "paid": "مدفوع",
     "unpaid": "غير مدفوع",
     "notMatched": "غير مطابق",
     "approved": "تم اعتماد الفاتورة",
     "noItems": "لا توجد أصناف",
-    "approve": "اعتماد الفاتورة"
+    "approve": "اعتماد الفاتورة",
+    "approving": "جارٍ الاعتماد...",
+    "save": "حفظ التعديلات",
+    "saving": "جارٍ الحفظ...",
+    "discard": "تجاهل",
+    "invalidRows": "كل صنف يحتاج اسمًا وكمية أكبر من 0 وسعرًا 0 أو أكثر.",
+    "viewReceipt": "عرض الإيصال",
+    "uploadTitle": "رفع الإيصال",
+    "uploadDescription": "أضف صورة إيصال المطعم وتكلفة التوصيل، وسيتم إنشاء مسودة الفاتورة منها.",
+    "deliveryFee": "تكلفة التوصيل (جنيه)",
+    "receiptFile": "صورة الإيصال",
+    "upload": "رفع الإيصال",
+    "uploading": "جارٍ الرفع...",
+    "notReady": "يمكن رفع الإيصال بعد وصول الطلب.",
+    "readOnly": "مضيف الجلسة فقط يمكنه إدارة الفاتورة.",
+    "draftUnavailable": "مسودة الفاتورة غير متاحة بعد.",
+    "messages": {
+      "uploaded": "تم رفع الإيصال. راجع مسودة الفاتورة.",
+      "saved": "تم تحديث الفاتورة.",
+      "approved": "تم اعتماد الفاتورة. يمكنك إنهاء الجلسة الآن."
+    },
+    "errors": {
+      "feeRequired": "تكلفة التوصيل مطلوبة",
+      "feeInvalid": "أدخل مبلغًا صحيحًا (0 أو أكثر)",
+      "fileRequired": "صورة الإيصال مطلوبة",
+      "fileType": "يجب أن يكون الإيصال صورة"
+    }
   }
 }

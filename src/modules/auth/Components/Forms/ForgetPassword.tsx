@@ -2,11 +2,14 @@ import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
-import MailIcon from "../../../../assets/svgs/MailIcon";
-import CustomInput from "../CustomInput";
+import { Link } from "react-router-dom";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useForgetPassword from "../../hooks/useForgetPassword";
+import { MailCheck } from "lucide-react";
+import MailIcon from "../../../../assets/svgs/MailIcon";
+import CustomInput from "../CustomInput";
+import { useForgetPassword } from "../../hooks/useAuthMutations";
+import { AUTH_LINK, AUTH_TITLE, PRIMARY_BUTTON } from "../styles";
 
 const createForgetPasswordSchema = (t: TFunction) =>
   z.object({
@@ -19,44 +22,56 @@ export default function ForgetPassword() {
   const { t } = useTranslation();
   const schema = useMemo(() => createForgetPasswordSchema(t), [t]);
 
-  const Mail = <MailIcon />;
-
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<ForgetPasswordData>({ resolver: zodResolver(schema) });
 
-  const { mutate: forgetPassword, isPending } = useForgetPassword();
-
-  const onSubmit = (data: ForgetPasswordData) => {
-    forgetPassword(data);
-  };
+  const { mutate: forgetPassword, isPending, isSuccess, error } = useForgetPassword();
 
   return (
-    <div className="mt-40">
-      <h2 className="font-bold text-[28px]">{t("forgetPassword.title")}</h2>
-      <p className="text-muted-foreground mb-10">{t("forgetPassword.subtitle")}</p>
+    <div className="py-16 md:py-24">
+      <h2 className={AUTH_TITLE}>{t("forgetPassword.title")}</h2>
+      <p className="mb-10 text-muted-foreground">{t("forgetPassword.subtitle")}</p>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CustomInput
-          icon={Mail}
-          label={t("forgetPassword.email")}
-          {...register("email")}
-        />
+      {isSuccess ? (
+        <div role="status" className="flex gap-3 rounded-2xl border border-success/30 bg-success/10 p-4">
+          <MailCheck className="size-6 shrink-0 text-success" />
+          <p>
+            {t("forgetPassword.success")} <bdi className="font-semibold">{getValues("email")}</bdi>
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit((data) => forgetPassword(data))} noValidate>
+          <CustomInput
+            icon={<MailIcon />}
+            type="email"
+            autoComplete="email"
+            label={t("forgetPassword.email")}
+            error={errors.email?.message}
+            {...register("email")}
+          />
 
-        {errors.email?.message && (
-          <p className="text-red-500 text-sm mt-2">{errors.email.message}</p>
-        )}
+          <button type="submit" disabled={isPending} className={`${PRIMARY_BUTTON} mt-6`}>
+            {isPending ? t("forgetPassword.sending") : t("forgetPassword.submit")}
+          </button>
 
-        <button
-          type="submit"
-          disabled={isPending}
-          className="bg-linear-to-br rtl:bg-linear-to-bl from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl mt-6"
-        >
-          {isPending ? t("forgetPassword.sending") : t("forgetPassword.submit")}
-        </button>
-      </form>
+          {error && (
+            <p role="alert" className="mt-3 text-sm whitespace-pre-line text-destructive">
+              {error.message}
+            </p>
+          )}
+        </form>
+      )}
+
+      <p className="mt-6">
+        {t("forgetPassword.backTo")}{" "}
+        <Link className={AUTH_LINK} to="/login">
+          {t("forgetPassword.signIn")}
+        </Link>
+      </p>
     </div>
   );
 }

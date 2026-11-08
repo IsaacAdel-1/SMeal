@@ -1,32 +1,51 @@
-import { Check, Store, Bike } from "lucide-react";
+import { Bike, Check, Store, type LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { OrderSession } from "../types";
-import { formatDate } from "@/modules/history/Components/MapingOrders";
-import { getSessionStatusLabel } from "../utils/sessionStatus";
+import { formatDate } from "@/lib/format";
+import { resolveAssetUrl } from "@/lib/utils";
+import { SessionStatus } from "@/shared/session/sessionStatus";
+import SessionStatusBadge from "@/shared/session/SessionStatusBadge";
 
-export default function OrderTrackingCard({
-  myOrders,
-}: {
-  myOrders: OrderSession;
-}) {
+type StepState = "done" | "current" | "pending";
+
+const STEP_STYLES: Record<StepState, string> = {
+  done: "bg-success text-white",
+  current: "bg-linear-to-br from-brand to-brand-strong text-white",
+  pending: "bg-surface-control text-muted-foreground",
+};
+
+function Step({ icon: Icon, state }: { icon: LucideIcon; state: StepState }) {
+  return (
+    <span className={`flex size-8.5 shrink-0 items-center justify-center rounded-full ${STEP_STYLES[state]}`}>
+      <Icon className="size-4.5" />
+    </span>
+  );
+}
+
+const Line = ({ active }: { active: boolean }) => (
+  <span className={`h-0.5 flex-1 ${active ? "bg-success" : "bg-surface-control"}`} />
+);
+
+export default function OrderTrackingCard({ myOrders }: { myOrders: OrderSession }) {
   const { t } = useTranslation();
-  const status = myOrders.status;
+  const { status } = myOrders;
+  const logo = resolveAssetUrl(myOrders.logoUrl);
+
+  const restaurantState: StepState =
+    status > SessionStatus.Ordered ? "done" : status === SessionStatus.Ordered ? "current" : "pending";
+  const arrivedState: StepState = status >= SessionStatus.Arrived ? "done" : "pending";
 
   return (
-    <div className="w-full p-6 bg-card text-card-foreground rounded-2xl border border-border mb-4">
-      <header className="flex items-center justify-between mb-6 gap-4">
+    <div className="w-full rounded-2xl border border-border bg-card p-6 text-start text-card-foreground">
+      <header className="mb-6 flex items-center justify-between gap-4 pe-8">
         <div className="flex min-w-0 items-center gap-3">
-          {myOrders.logoUrl && (
-            <img src={myOrders.logoUrl} alt="" className="size-12 rounded-xl object-cover" />
-          )}
+          {logo && <img src={logo} alt="" className="size-12 shrink-0 rounded-xl object-cover" />}
           <div className="min-w-0">
             <p className="truncate font-bold">{myOrders.restaurantName}</p>
             <p className="text-sm text-muted-foreground">{t("orderTracking.title")}</p>
           </div>
         </div>
-        <span className="rounded-full bg-surface-raised px-3 py-1 text-sm font-semibold">
-          {t(`sessionStatus.${status}`, { defaultValue: getSessionStatusLabel(status) })}
-        </span>
+        <SessionStatusBadge status={status} />
       </header>
 
       <div className="mb-5 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
@@ -40,44 +59,23 @@ export default function OrderTrackingCard({
           {t("orderTracking.started")}: <bdi className="text-card-foreground">{formatDate(myOrders.startedAt)}</bdi>
         </p>
         <p>
-          {t("orderTracking.expectedClose")}: <bdi className="text-card-foreground">{formatDate(myOrders.expectedClosedAt)}</bdi>
+          {t("orderTracking.expectedClose")}:{" "}
+          <bdi className="text-card-foreground">{formatDate(myOrders.expectedClosedAt)}</bdi>
         </p>
       </div>
 
-      <div className="flex items-center">
-        <span className="bg-success rounded-full w-8.5 h-8.5 flex justify-center items-center">
-          <Check className="text-white" />
-        </span>
-
-        <p className="flex-1 bg-surface-control h-px" />
-
-        <span
-          className={`${
-            status === 0
-              ? "bg-surface-raised"
-              : status === 2
-              ? "bg-linear-to-br from-brand to-brand-strong"
-              : "bg-success"
-          } rounded-full w-8.5 h-8.5 flex justify-center items-center`}
-        >
-          <Store className="text-white" />
-        </span>
-
-        <p className="flex-1 bg-surface-control h-px" />
-
-        <span
-          className={`${
-            status === 3 ? "bg-success" : "bg-surface-raised"
-          } rounded-full w-8.5 h-8.5 flex justify-center items-center`}
-        >
-          <Bike className={status >= 3 ? "text-white" : "text-muted-foreground"} />
-        </span>
+      <div className="flex items-center gap-1">
+        <Step icon={Check} state="done" />
+        <Line active={status >= SessionStatus.Ordered} />
+        <Step icon={Store} state={restaurantState} />
+        <Line active={status >= SessionStatus.Arrived} />
+        <Step icon={Bike} state={arrivedState} />
       </div>
 
-      <div className="flex justify-between mt-2">
-        <p className="text-card-foreground">{t("orderTracking.submitted")}</p>
-        <p className="text-card-foreground">{t("orderTracking.restaurant")}</p>
-        <p className="text-card-foreground">{t("orderTracking.arrived")}</p>
+      <div className="mt-2 flex justify-between text-sm text-card-foreground">
+        <p>{t("orderTracking.submitted")}</p>
+        <p>{t("orderTracking.restaurant")}</p>
+        <p>{t("orderTracking.arrived")}</p>
       </div>
     </div>
   );

@@ -2,11 +2,8 @@
   "sidebar": {
     "workspace": "Desktop Workspace",
     "logout": "Log out",
-    "roles": {
-      "customer": "Customer",
-      "Organizer": "Organizer",
-      "chef": "Chef"
-    },
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
     "items": {
       "home": "Home Feed",
       "orders": "My Orders",
@@ -17,9 +14,14 @@
   "orders": {
     "header": "My Orders",
     "noActiveSession": "No Active Sessions",
-    "arrivedPrompt": "Your order has arrived from the restaurant. Confirm to mark it as arrived.",
-    "invoicePrompt": "Upload the receipt and the delivery cost for this order.",
-    "invoiceButton": "Invoice"
+    "prompts": {
+      "open": "The session is open. Close it when everyone has added their order.",
+      "closed": "Orders are locked. Place the order with the restaurant, or reopen the session.",
+      "ordered": "Your order has been placed with the restaurant. Confirm when it arrives.",
+      "arrived": "The food has arrived. Upload the receipt and the delivery cost.",
+      "invoiceReady": "Review the invoice draft, approve it and end the session.",
+      "participantOpen": "The session is still open, so you can change your order until the host closes it."
+    }
   },
   "login": {
     "title": "Welcome Back",
@@ -37,14 +39,39 @@
       "passwordMin": "Password must be at least 8 characters"
     }
   },
+  "signup": {
+    "title": "Create Account",
+    "subtitle": "Join sMeals to order fresh gourmet dishes",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "password": "Password",
+    "acceptTerms": "I accept the Terms & Conditions",
+    "submit": "Sign Up",
+    "submitting": "Creating account...",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "errors": {
+      "firstNameMin": "First name should be at least 2 characters",
+      "lastNameMin": "Last name should be at least 2 characters",
+      "emailInvalid": "Please enter a valid email address",
+      "phoneInvalid": "Enter a valid Egyptian mobile number (01xxxxxxxxx)",
+      "passwordMin": "Password must be at least 8 characters",
+      "termsRequired": "You must accept the Terms & Conditions"
+    }
+  },
   "otp": {
     "title": "Security Code",
     "subtitle": "Enter code dispatched to",
     "digit": "Digit {{number}}",
     "verify": "Verify Account",
-    "sending": "Sending...",
+    "sending": "Verifying...",
     "noCode": "Didn't get the code?",
     "resend": "Resend",
+    "resending": "Resending...",
+    "resent": "A new code has been sent to your email.",
+    "success": "Your email is verified. You can sign in now.",
     "errors": {
       "generic": "Something went wrong"
     }
@@ -55,6 +82,9 @@
     "email": "Registered Email",
     "submit": "Send Recovery Link",
     "sending": "Sending...",
+    "success": "If an account exists, a recovery link has been sent to",
+    "backTo": "Remembered your password?",
+    "signIn": "Sign in",
     "errors": {
       "emailInvalid": "Please enter a valid email address"
     }
@@ -75,75 +105,77 @@
     "you": "You",
     "inclDelivery": "Incl. {{amount}} Delivery",
     "viewReceipt": "View Verified Receipt Scan",
+    "receiptTitle": "{{name}} receipt",
+    "openReceipt": "Open in a new tab",
+    "noReceipt": "No receipt was uploaded for this session.",
     "totalPastSpent": "Total Past Spent",
     "completedOrders": "Completed Orders",
     "sessions_one": "{{count}} Session",
     "sessions_other": "{{count}} Sessions",
-    "loading": "Loading history",
-    "retry": "Retry fetching data",
+    "loading": "Loading history...",
+    "retry": "Try again",
     "empty": "History is empty"
   },
   "homeNavbar": {
-    "sessionHost": "Session host",
-    "roles": {
-      "customer": "Customer",
-      "admin": "Admin",
-      "Organizer": "Organizer"
-    }
+    "greeting": "Hi, {{name}}",
+    "sessionHost": "Session host"
   },
   "availableRestaurants": {
     "title": "Available Restaurants",
     "loading": "Loading restaurants...",
-    "empty": "No restaurants available"
+    "empty": "No restaurants available",
+    "noMatches": "No restaurants match your search"
   },
   "restaurantCard": {
     "viewDetails": "View Details & Menu",
-    "distance": "{{distance}} km"
+    "distance": "Delivers within {{distance}} km"
   },
   "exploreCuisines": {
     "title": "Explore Cuisines",
     "searchPlaceholder": "Search restaurants, cuisines",
+    "clearSearch": "Clear search",
     "loading": "Loading...",
     "all": "All items"
   },
   "activeGroupSessions": {
     "title": "Active Group Sessions",
-    "goToSession": "Go to session {{number}}"
+    "goToSession": "Go to session {{number}}",
+    "empty": "No active sessions right now. Pick a restaurant below to start one."
   },
   "activeSession": {
     "active": "Session Active",
     "host": "Host",
     "you": "You",
+    "timeLeft": "Time left",
     "joining_zero": "No one joining",
     "joining_one": "{{count}} Joining",
-    "joining_two": "{{count}} Joining",
-    "joining_few": "{{count}} Joining",
-    "joining_many": "{{count}} Joining",
-    "joining_other": "{{count}} Joining",
-    "confirmOrder": "Confirm Order",
-    "closeOrder": "Close Order",
-    "placeOrder": "Place Order",
-    "markArrived": "Mark Arrived",
-    "makeInvoiceDraft": "Make Invoice Draft",
-    "endSession": "End Session",
-    "reopenSession": "Reopen Session",
-    "cancelSession": "Cancel Session"
+    "joining_other": "{{count}} Joining"
+  },
+  "sessionBanner": {
+    "yourSession": "You are hosting this group session",
+    "hostedBy": "Group session hosted by {{name}}",
+    "closesAt": "Closes {{time}}",
+    "joinHint": "Pick your items below, then press “Join Active Session”.",
+    "youJoined": "You're in"
   },
   "billBreakdown": {
     "title": "Bill Breakdown",
     "itemsSubtotal": "Your Items Subtotal",
-    "deliveryShare": "Delivery Share ({{people}} people)",
+    "deliveryShare_one": "Delivery Share ({{count}} person)",
+    "deliveryShare_other": "Delivery Share ({{count}} people)",
+    "deliveryPending": "Set after the receipt is uploaded",
     "totalAmount": "Total Amount"
   },
   "orderedItems": {
     "title": "Your Ordered Items",
     "status": "Locked & Submitted",
+    "editable": "Open for changes",
+    "empty": "No items",
     "quantityAndUnitPrice": "Qty: {{quantity}} - {{unitPrice}} EGP each",
     "price": "{{price}} EGP"
   },
   "orderTracking": {
     "title": "Live Order Tracking",
-    "placedStatus": "Placed with Restaurant",
     "submitted": "Submitted",
     "restaurant": "Restaurant",
     "arrived": "Arrived",
@@ -153,35 +185,61 @@
     "expectedClose": "Expected close"
   },
   "sessionStatus": {
+    "0": "Open",
+    "1": "Closed",
     "2": "Ordered",
-    "3": "Arrived"
+    "3": "Arrived",
+    "4": "Invoice ready",
+    "5": "Completed"
+  },
+  "profile": {
+    "header": "Profile & Account Settings"
   },
   "accountSettings": {
     "title": "Account Settings",
     "items": {
-      "editPersonalDetails": "Edit Personal Details",
-      "changePassword": "Change Password",
-      "securityPrivacy": "Security & Privacy"
+      "personalDetails": "Personal Details",
+      "changePassword": "Change Password"
     }
+  },
+  "personalDetails": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "readOnlyNote": "Personal details can't be changed from the app yet."
   },
   "changePassword": {
     "description": "Enter your current password and choose a new one",
     "currentPassword": "Current Password",
     "newPassword": "New Password",
-    "confirmNewPassword": "Confirm New Password"
+    "confirmNewPassword": "Confirm New Password",
+    "submit": "Update Password",
+    "submitting": "Updating...",
+    "success": "Your password has been changed.",
+    "errors": {
+      "currentRequired": "Please enter your current password",
+      "passwordMin": "Password must be at least 8 characters",
+      "confirmRequired": "Please confirm the new password",
+      "passwordsMismatch": "Passwords do not match",
+      "samePassword": "The new password must be different from the current one"
+    }
   },
   "common": {
-    "cancel": "Cancel",
-    "saveChanges": "Save changes",
     "currency": "EGP",
     "loading": "Loading...",
-    "restaurantNotFound": "Restaurant not found"
-  },
-  "editPersonalDetails": {
-    "profilePicture": "Profile picture",
-    "changeProfilePicture": "Change profile picture",
-    "firstName": "First Name",
-    "lastName": "Last Name"
+    "restaurantNotFound": "Restaurant not found",
+    "backHome": "Back to home",
+    "genericError": "Something went wrong. Please try again.",
+    "networkError": "Can't reach the server. Check your connection and try again.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "showing": "Showing {{from}}–{{to}} of {{total}}",
+    "pagination": "Pagination",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "page": "Page {{page}}"
   },
   "logout": {
     "button": "Log Out"
@@ -190,30 +248,67 @@
     "title": "Preferences & Appearance",
     "darkMode": "Dark Mode",
     "appLanguage": "App Language",
-    "languageValue": "English (US)"
+    "switchLanguage": "Switch language"
   },
   "footer": {
     "itemsSelected_one": "{{count}} item selected",
     "itemsSelected_other": "{{count}} items selected",
-    "totalPrice": "{{total}} EGP"
+    "totalPrice": "{{total}} EGP",
+    "hints": {
+      "pickToCreate": "Pick at least one item to start a group session.",
+      "pickToJoin": "Pick at least one item to join this session.",
+      "readyToJoin": "Press “Join Active Session” to send your order.",
+      "joined": "You're in this session. Change the quantities and save to update your order.",
+      "unsaved": "You have unsaved changes to your order.",
+      "emptyOrder": "Your order can't be empty. Leave the session to remove it.",
+      "ownerNeedsItems": "Your order can't be empty.",
+      "locked": "Orders are locked for this session.",
+      "notAccepting": "This session is no longer accepting new orders."
+    }
+  },
+  "menu": {
+    "loading": "Loading menu...",
+    "empty": "This restaurant has no menu items yet."
   },
   "session": {
     "actions": {
       "create": "Create Session",
       "join": "Join Active Session",
+      "update": "Update My Order",
+      "leave": "Leave Session",
+      "viewOrder": "View My Order",
+      "editOrder": "Edit My Order",
       "close": "Close Session",
       "placeOrder": "Place Order",
       "markArrived": "Mark Arrived",
+      "invoice": "Upload Invoice",
+      "reviewInvoice": "Review Invoice",
       "end": "End Session",
       "reopen": "Reopen Session",
       "cancel": "Cancel Session"
     },
-    "menuHeader": "{{name}} Menu Flow",
-    "confirmAction": "Are you sure?"
+    "messages": {
+      "created": "Group session created. Share it with your team!",
+      "joined": "You joined the session. Your order was added.",
+      "updated": "Your order was updated.",
+      "left": "You left the session.",
+      "close": "Session closed. Orders are now locked.",
+      "open": "Session reopened.",
+      "order": "Order placed with the restaurant.",
+      "arrive": "Marked as arrived.",
+      "end": "Session ended.",
+      "cancel": "Session cancelled."
+    },
+    "confirm": {
+      "cancel": "Cancel this session? Everyone's orders will be dropped.",
+      "end": "End this session? This can't be undone.",
+      "leave": "Leave this session? Your order will be removed."
+    },
+    "menuHeader": "{{name}} Menu Flow"
   },
   "itemCard": {
-    "decreaseQuantity": "Decrease quantity",
-    "increaseQuantity": "Increase quantity"
+    "decreaseQuantity": "Decrease {{name}} quantity",
+    "increaseQuantity": "Increase {{name}} quantity"
   },
   "setNewPassword": {
     "title": "Set new password",
@@ -222,37 +317,69 @@
     "confirmPassword": "Confirm password",
     "save": "Save password",
     "saving": "Saving...",
+    "success": "Your password was reset. Sign in with the new password.",
     "backTo": "Remembered your password?",
     "signIn": "Sign in",
+    "requestNewLink": "Request a new reset link",
     "errors": {
       "passwordMin": "Password must be at least 8 characters",
       "confirmRequired": "Please confirm your password",
-      "mismatch": "Passwords do not match"
+      "mismatch": "Passwords do not match",
+      "invalidLink": "This reset link is invalid or incomplete."
     }
   },
   "invoice": {
     "title": "Invoice",
+    "headerFor": "{{name}} Invoice",
+    "backToOrders": "Back to my orders",
+    "draftTitle": "Invoice draft",
     "item": "Item",
-    "price": "Price",
-    "quantity": "Quantity",
-    "edit": "Edit",
+    "quantity": "Qty",
+    "unitPrice": "Unit price",
+    "total": "Total",
     "editItem": "Edit {{name}}",
-    "confirmEdit": "Confirm edit",
+    "confirmEdit": "Done editing",
+    "remove": "Remove {{name}}",
+    "addItem": "Add item",
     "itemName": "Item name",
     "people": "Orders by person",
     "participants_one": "{{count}} participant",
     "participants_other": "{{count}} participants",
     "foodTotal": "Food total",
     "delivery": "Delivery",
-    "grandTotal": "Grand total",
     "food": "Food",
     "deliveryShare": "Delivery share",
-    "total": "Total",
     "paid": "Paid",
     "unpaid": "Unpaid",
     "notMatched": "Not matched",
     "approved": "Invoice approved",
     "noItems": "No items",
-    "approve": "Approve invoice"
+    "approve": "Approve Invoice",
+    "approving": "Approving...",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "discard": "Discard",
+    "invalidRows": "Every item needs a name, a quantity above 0 and a price of 0 or more.",
+    "viewReceipt": "View receipt",
+    "uploadTitle": "Upload the receipt",
+    "uploadDescription": "Add the restaurant receipt photo and the delivery cost. The invoice draft is created from it.",
+    "deliveryFee": "Delivery cost (EGP)",
+    "receiptFile": "Receipt photo",
+    "upload": "Upload Receipt",
+    "uploading": "Uploading...",
+    "notReady": "The receipt can be uploaded after the order arrives.",
+    "readOnly": "Only the session host can manage the invoice.",
+    "draftUnavailable": "The invoice draft isn't available yet.",
+    "messages": {
+      "uploaded": "Receipt uploaded. Review the invoice draft.",
+      "saved": "Invoice updated.",
+      "approved": "Invoice approved. You can end the session now."
+    },
+    "errors": {
+      "feeRequired": "Delivery cost is required",
+      "feeInvalid": "Enter a valid amount (0 or more)",
+      "fileRequired": "Receipt photo is required",
+      "fileType": "The receipt must be an image"
+    }
   }
 }

@@ -1,47 +1,44 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { Resturant } from "../types";
-import ResturantLogo from "../../../assets/svgs/ResturantLogo";
-import { StarIcon } from "../../../assets/svgs/Star";
-import { BikeIcon } from "../../../assets/svgs/Bike";
 import { Link } from "react-router-dom";
+import type { Restaurant } from "../types";
+import ResturantLogo from "../../../assets/svgs/ResturantLogo";
+import { BikeIcon } from "../../../assets/svgs/Bike";
+import { resolveAssetUrl } from "@/lib/utils";
 
-export default function ResturantCard(resturant: Resturant) {
+export default function ResturantCard(restaurant: Restaurant) {
   const { t } = useTranslation();
+  const logo = resolveAssetUrl(restaurant.logoUrl);
 
   return (
-    <div className="bg-card text-card-foreground flex flex-col p-4 rounded-2xl">
-      <div className="flex gap-4 items-center">
-        <div className="h-16 w-16 shrink-0 flex items-center justify-center bg-card">
-          {resturant.logoUrl ? (
-            <img
-              src={resturant.logoUrl}
-              alt={resturant.name}
-              className="h-full w-full object-cover rounded-2xl"
-            />
+    <div className="flex flex-col rounded-2xl border border-border bg-card p-4 text-card-foreground">
+      <div className="flex items-center gap-4">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-surface-raised">
+          {logo ? (
+            <img src={logo} alt="" loading="lazy" className="h-full w-full object-cover" />
           ) : (
-            <ResturantLogo className="h-full w-full bg-card" />
+            <ResturantLogo className="h-full w-full" />
           )}
         </div>
-        <div className="flex flex-col min-w-0">
-          <p className="font-semibold text-xl text-card-foreground truncate">{resturant.name}</p>
-          <p className="text-sm text-muted-foreground truncate">{resturant.address}</p>
-          <div className="flex gap-4 text-sm text-info">
-            <p className="flex items-center gap-1">
-              <StarIcon className="w-4 h-4" /> 4
+        <div className="flex min-w-0 flex-col gap-0.5">
+          <p className="truncate text-xl font-semibold text-card-foreground">{restaurant.name}</p>
+          {restaurant.address && (
+            <p className="flex items-center gap-1 truncate text-sm text-muted-foreground">
+              <MapPin className="size-3.5 shrink-0" />
+              <span className="truncate">{restaurant.address}</span>
             </p>
-            <p className="flex items-center gap-1">
-              <BikeIcon className="w-4 h-4" />{" "}
-              {t("restaurantCard.distance", { distance: resturant.maximumDeliveryDistanceKm })}
-            </p>
-          </div>
+          )}
+          <p className="flex items-center gap-1 text-sm text-info">
+            <BikeIcon className="h-4 w-4" />
+            {t("restaurantCard.distance", { distance: restaurant.maximumDeliveryDistanceKm })}
+          </p>
         </div>
       </div>
       <Link
-        to={`/restaurants/${resturant.id}`}
-        className="flex items-center gap-4 text-center justify-center h-9.5 bg-linear-135 rtl:bg-linear-225 from-brand to-brand-strong text-white mt-6 cursor-pointer rounded-[10px]"
+        to={`/restaurants/${restaurant.id}`}
+        className="mt-6 flex h-9.5 items-center justify-center gap-4 rounded-[10px] bg-linear-135 from-brand to-brand-strong text-center text-white transition-opacity hover:opacity-90 rtl:bg-linear-225"
       >
-        {t("restaurantCard.viewDetails")} <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+        {t("restaurantCard.viewDetails")} <ArrowRight className="h-4 w-4 rtl:rotate-180" />
       </Link>
     </div>
   );

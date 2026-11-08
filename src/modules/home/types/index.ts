@@ -1,13 +1,19 @@
 export interface Restaurant {
-        id: string;
-        name: string;
-        phoneNumber: string;
-        address: string;
-        logoUrl: string
-        maximumDeliveryDistanceKm: number ;
+  id: string;
+  name: string;
+  phoneNumber: string | null;
+  address: string | null;
+  logoUrl: string | null;
+  maximumDeliveryDistanceKm: number;
 }
 
+/** @deprecated kept for older imports, use `Restaurant`. */
 export type Resturant = Restaurant;
+
+export interface Category {
+  id: string;
+  name: string;
+}
 
 export interface ActiveSessionType {
   sessionId: string;
@@ -22,16 +28,4 @@ export interface ActiveSessionType {
   expectedClosedAt: string;
   currentUserIsOwner: boolean;
   currentUserOrderId: string | null;
-}
-export interface ApiResponse {
-  isSuccess: boolean;
-  message: string | null;
-  data: ActiveSessionType[];
-  errors: string[] | null;
-}
-export interface ActiveSessionsResponse {
-  isSuccess: boolean;
-  message: string;
-  data: ActiveSessionType[];
-  errors: string[];
 }

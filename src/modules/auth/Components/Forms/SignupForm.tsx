@@ -1,81 +1,126 @@
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
-import CheckCircleIcon from "../../../../assets/svgs/CheckCircleIcon";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
+import { Link } from "react-router-dom";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Phone } from "lucide-react";
 import LockIcon from "../../../../assets/svgs/LockIcon";
 import MailIcon from "../../../../assets/svgs/MailIcon";
 import UserIcon from "../../../../assets/svgs/UserIcon";
 import CustomInput from "../CustomInput";
+import { useRegister } from "../../hooks/useAuthMutations";
+import { AUTH_LINK, AUTH_TITLE, PRIMARY_BUTTON } from "../styles";
 
-import useRegister from "../../hooks/useRegister";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+const createSignupSchema = (t: TFunction) =>
+  z.object({
+    firstName: z.string().trim().min(2, t("signup.errors.firstNameMin")),
+    lastName: z.string().trim().min(2, t("signup.errors.lastNameMin")),
+    email: z.email(t("signup.errors.emailInvalid")),
+    phoneNumber: z.string().regex(/^01\d{9}$/, t("signup.errors.phoneInvalid")),
+    password: z.string().min(8, t("signup.errors.passwordMin")),
+    termsAndConditions: z.boolean().refine((value) => value, {
+      message: t("signup.errors.termsRequired"),
+    }),
+  });
+
+type SignupData = z.infer<ReturnType<typeof createSignupSchema>>;
 
 export default function SignupForm() {
-    const User = <UserIcon />
-    const Mail = <MailIcon/>
-    const Lock = <LockIcon/>
-    const CheckCircle = <CheckCircleIcon/>
+  const { t } = useTranslation();
+  const schema = useMemo(() => createSignupSchema(t), [t]);
 
-    const schema = z.object({
-        firstName : z.string().min(2 , "first Name should be at least 2 characters"),
-        lastName : z.string().min(2 , "last Name should be at least 2 characters"),
-        email : z.string().email(),
-        phoneNumber : z.string().regex(/^01\d{9}$/, "Enter a valid Egyptian mobile number"),
-        password : z.string().min(8 , "Password should be at least 8 characters"),
-        termsAndConditions : z.boolean().refine((value) => value === true ,{
-            message : "You must accept Terms & Conditions"
-        })
-    })
-    type Register =z.infer<typeof schema>
-    const {register , handleSubmit , formState : {errors}} = useForm<z.infer<typeof schema>>({resolver : zodResolver(schema)});
-    const {mutate : registerUser , isError , isPending} = useRegister()
-    
-    const onSubmit = (data : Register)=>{
-        const { termsAndConditions, ...registerData } = data;
-        registerUser(registerData)
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupData>({ resolver: zodResolver(schema), defaultValues: { termsAndConditions: false } });
+  const { mutate: registerUser, isPending, error } = useRegister();
+
+  const onSubmit = ({ termsAndConditions: _accepted, ...data }: SignupData) => registerUser(data);
+
   return (
-    <div className="mt-20">
-            <h2 className="font-bold text-[28px]">Create Account</h2>
-            <p className="text-muted-foreground">Join sMeals to order fresh gourmet dishes</p>
-            
-            <div className="flex flex-col gap-3 mt-10">
+    <div className="py-12">
+      <h2 className={AUTH_TITLE}>{t("signup.title")}</h2>
+      <p className="text-muted-foreground">{t("signup.subtitle")}</p>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-
-                <CustomInput label="First Name" icon={User} {...register("firstName")}/>
-                <p className="text-red-500 text-sm">{errors.firstName?.message}</p>
-                <CustomInput label="Last Name" icon={User} {...register("lastName")}/>
-                <p className="text-red-500 text-sm">{errors.lastName?.message}</p>
-                <CustomInput label="Email Address" icon={Mail} {...register("email")}/>
-                <p className="text-red-500 text-sm">{errors.email?.message}</p>
-                <CustomInput label="Phone Number" icon={Lock} type="text" {...register("phoneNumber")}/>
-                <p className="text-red-500 text-sm">{errors.phoneNumber?.message}</p>
-                <CustomInput label="Password" icon={CheckCircle} type="password" {...register("password")}/>
-                <p className="text-red-500 text-sm">{errors.password?.message}</p>
-                <div className="flex justify-between">
-                    <div className="flex gap-2 items-center">
-                        <input type="checkbox" className="accent-brand size-4" id="termsAndConditions" {...register("termsAndConditions")}/>
-                        <label htmlFor="termsAndConditions" className="">I accept Terms & Conditions</label>
-                        
-                    </div>
-                    
-        
-                    <Link className="text-brand text-sm font-bold cursor-pointer" type="button" to={'/forget-password'}>Forget Password?</Link>
-                </div>
-                {errors.termsAndConditions && (
-                            <p className="text-red-500 text-sm">
-                            {errors.termsAndConditions.message}
-                            </p>
-                        )}
-                <button className="bg-linear-to-br from-brand to-brand-strong w-full text-white h-11.5 font-semibold rounded-xl" 
-                type="submit" disabled={isPending}>{isPending? "Sending data...": "Sign Up"}</button>
-            </form>
-            {isError && <p>Error while registing</p>}
-            <p className="">Don't have an account? <Link className="text-brand font-semibold cursor-pointer" to={'/login'}>Sign in</Link> </p>
-            </div>
-            
-            
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-10 flex flex-col gap-3" noValidate>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <CustomInput
+            label={t("signup.firstName")}
+            icon={<UserIcon />}
+            autoComplete="given-name"
+            error={errors.firstName?.message}
+            {...register("firstName")}
+          />
+          <CustomInput
+            label={t("signup.lastName")}
+            icon={<UserIcon />}
+            autoComplete="family-name"
+            error={errors.lastName?.message}
+            {...register("lastName")}
+          />
         </div>
-  )
+        <CustomInput
+          label={t("signup.email")}
+          icon={<MailIcon />}
+          type="email"
+          autoComplete="email"
+          error={errors.email?.message}
+          {...register("email")}
+        />
+        <CustomInput
+          label={t("signup.phone")}
+          icon={<Phone />}
+          type="tel"
+          inputMode="numeric"
+          autoComplete="tel"
+          dir="ltr"
+          error={errors.phoneNumber?.message}
+          {...register("phoneNumber")}
+        />
+        <CustomInput
+          label={t("signup.password")}
+          icon={<LockIcon />}
+          type="password"
+          autoComplete="new-password"
+          error={errors.password?.message}
+          {...register("password")}
+        />
+
+        <div>
+          <label htmlFor="termsAndConditions" className="flex cursor-pointer items-center gap-2">
+            <input
+              type="checkbox"
+              className="size-4 accent-brand"
+              id="termsAndConditions"
+              {...register("termsAndConditions")}
+            />
+            {t("signup.acceptTerms")}
+          </label>
+          {errors.termsAndConditions && (
+            <p className="mt-1.5 text-sm text-destructive">{errors.termsAndConditions.message}</p>
+          )}
+        </div>
+
+        <button className={PRIMARY_BUTTON} type="submit" disabled={isPending}>
+          {isPending ? t("signup.submitting") : t("signup.submit")}
+        </button>
+
+        {error && (
+          <p role="alert" className="text-sm whitespace-pre-line text-destructive">
+            {error.message}
+          </p>
+        )}
+
+        <p>
+          {t("signup.haveAccount")}{" "}
+          <Link className={AUTH_LINK} to="/login">
+            {t("signup.signIn")}
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
 }
